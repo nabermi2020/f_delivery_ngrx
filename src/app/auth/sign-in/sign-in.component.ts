@@ -31,7 +31,6 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   onUserAuthorizedSuccess(authStatus) {
     this.authResults  = authStatus;
-    console.log(authStatus);
   }
 
 /**

@@ -3,9 +3,6 @@
     <div class="col-md-6">
       <app-filters (activeCategorySelected)="setFilterCategory($event)" *ngIf="isSearchFailure && onlineMode"></app-filters>
     </div>
-    <div class="col-md-6" *ngIf="onlineMode">
-      <app-product-search (searchDone)="setProducts($event)" ></app-product-search>
-    </div>
   </div>
   
   

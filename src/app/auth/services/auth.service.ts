@@ -22,9 +22,6 @@ export class AuthService {
   
   constructor(private router: Router,
               private http: HttpClient,
-              private errorService: ErrorService,
-              private loadingService: LoadingService,
-              private editModal: EditModalService
               ) {}
 
   authenticateUser(login: string, password: string) {
@@ -33,7 +30,7 @@ export class AuthService {
       if (onlineMode) {
         this.aunthenticateUserOnline(login, password, authObserver);
       } else {
-        authObserver.next({ authStatus: false, onlineMode: false });
+        authObserver.next({ authStatus: false, onlineMode: false }); 
       }
     });
     
@@ -56,6 +53,7 @@ export class AuthService {
 
   onAunthenticateUserOnlineSuccess(authResults, authObserver: Observer<any>) {
       let onlineMode = navigator.onLine;
+      console.log(authResults);
       localStorage.setItem('userInfo', JSON.stringify(authResults[0]));
       let authStatus = this.getAuthStatus(authResults) == true ? true : false;
       authObserver.next({ authStatus: authStatus, onlineMode: onlineMode });
@@ -77,8 +75,9 @@ export class AuthService {
 
   onSignInSuccess(authStatus) {
     this.authResults = authStatus;
-    this.isUserAuthorized.next(this.authResults);
-    console.log(this.authResults);
+    console.log(authStatus);
+    this.router.navigate(['dashboard/products/pizza']);
+    //this.isUserAuthorized.next(this.authResults);
   }
 
   onSignInFailure(authErr) {
@@ -184,7 +183,7 @@ export class AuthService {
       const password = userData.passwords.password;
       let onlineMode = navigator.onLine;
       
-      if (!onlineMode) {
+      if (onlineMode) {
         this.getUserInfo(login, password, observer);
       } else {
         observer.error("offline mode!");

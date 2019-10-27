@@ -16,31 +16,31 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit() {
-    this.checkAuthenticationStatus();  
+    //this.checkAuthenticationStatus();  
   }
 
   checkAuthenticationStatus() {
-    this.authService.isUserAuthorized
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        authStatus => {
-          if (authStatus.authStatus && authStatus.onlineMode) {
-            this.router.navigate(['/dashboard/products/pizza']);
-          } else { 
-            this.router.navigate(['']);
-          }
-        }
-      );
+    // this.authService.isUserAuthorized
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(
+    //     authStatus => {
+    //       if (authStatus.authStatus && authStatus.onlineMode) {
+    //         this.router.navigate(['/dashboard/products/pizza']);
+    //       } else { 
+    //         this.router.navigate(['']);
+    //       }
+    //     }
+    //   );
 
-    this.isAuthenticated();
+    //this.isAuthenticated();
   }
 
   isAuthenticated() {
-    const userData = localStorage.getItem("userInfo");
-    if (navigator.onLine && userData) {
-      const { login, password } = JSON.parse(userData);
-      this.authService.signIn(login, password);
-    }    
+    // const userData = localStorage.getItem("userInfo");
+    // if (navigator.onLine && userData) {
+    //   const { login, password } = JSON.parse(userData);
+    //   this.authService.signIn(login, password);
+    // }    
   }
 
   ngOnDestroy() {

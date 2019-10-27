@@ -9,8 +9,6 @@ import { ShortenPipe } from './shorten.pipe';
 import { FormatPhonePipe } from './format-phone.pipe';
 import { FooterComponent } from './footer/footer.component';
 import { LoadingComponent } from './loading/loading.component';
-import { ErrorComponent } from './error/error.component';
-import { ConfirmationPopupComponent } from './confirmation-popup/confirmation-popup.component';
 
 
 @NgModule({
@@ -20,9 +18,7 @@ import { ConfirmationPopupComponent } from './confirmation-popup/confirmation-po
        ShortenPipe,
        FormatPhonePipe,
        FooterComponent,
-       LoadingComponent,
-       ErrorComponent,
-       ConfirmationPopupComponent    
+       LoadingComponent 
     ],
     imports: [
         CommonModule,  
@@ -33,9 +29,7 @@ import { ConfirmationPopupComponent } from './confirmation-popup/confirmation-po
         SideBarComponent,
         FormatPhonePipe,
         FooterComponent,
-        LoadingComponent,
-        ErrorComponent,
-        ConfirmationPopupComponent
+        LoadingComponent
     ]
 
 })
