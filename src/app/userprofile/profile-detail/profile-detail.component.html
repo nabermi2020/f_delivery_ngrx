@@ -1,0 +1,17 @@
+<div id="profileInfoWrapper">
+    <div id="editProfile" (click)="editProfile()">Edit</div>
+
+    <div id="userDetail">
+        <div class="row" *ngFor="let key of objectKeys(userViewTemplate)">
+            <div class="col-md-3"><h5>{{key + ':' }}</h5></div>
+            <div class="col-md-6" *ngIf="key != 'Phone'"> {{ userViewTemplate[key]}}  </div>
+            <div class="col-md-6" *ngIf="key == 'Phone'"> {{ userViewTemplate[key] | formatPhone}}  </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="editMode">
+        <app-edit-profile></app-edit-profile>
+    </ng-container>
+     
+  </div>

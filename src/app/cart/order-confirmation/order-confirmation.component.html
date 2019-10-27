@@ -1,0 +1,193 @@
+<div id="orderConfirmation">
+        
+  <div class="row">
+      <div class="col-md-8">
+          <div id="orderDetail">
+            
+            <div id="orderDetailHeader">
+                <h4>Enter delivery info</h4>
+            </div>
+            <form id="order"
+                  #form=ngForm
+                  (ngSubmit)="showConfirmationPopUp(form)">
+                  <div id="orderInfo">
+                  <div class="row">
+
+                  <div class="col-md-6 col-xs-6">
+                    <div class="form-group">
+                        <label for="firstName">
+                            First Name:
+                            <input type="text"
+                                   placeholder="Enter first name"
+                                   class="form-control"
+                                   id="firstName"
+                                   required
+                                   firstName
+                                   #firstName="ngModel"
+                                   name="firstName"
+                                   ngModel>
+                        </label>
+                        <div *ngIf="!firstName.valid && firstName.touched" class="validationErrors">First name isn't valid!</div>
+                    </div>
+                </div>
+
+             
+                <div class="col-md-6 col-xs-6">
+                    <div class="form-group">
+                        <label for="Last Name">
+                            Last Name:
+                            <input type="text"
+                                   placeholder="Enter last name"
+                                   class="form-control"
+                                   id="lastName"
+                                   required
+                                   lastName
+                                   #lastName="ngModel"
+                                   name="lastName"
+                                   ngModel>
+                        </label>
+                        <div *ngIf="!lastName.valid && lastName.touched" class="validationErrors">Last name isn't valid!</div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xs-6">
+                    <div class="form-group">
+                        <label for="email">
+                            Email:
+                            <input type="email"
+                                   placeholder="Enter email"
+                                   class="form-control"
+                                   id="email"
+                                   required
+                                   email
+                                   #email="ngModel"
+                                   name="email"
+                                   ngModel>
+                        </label>
+                        <div *ngIf="!email.valid && email.touched" class="validationErrors">Email isn't valid!</div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xs-6">
+                    <div class="form-group">
+                        <label for="phone">
+                            Phone:
+                            <input type="text"
+                                   placeholder="Enter phone"
+                                   class="form-control"
+                                   id="phone"
+                                   required
+                                   phone
+                                   #phone="ngModel"
+                                   name="phone"
+                                   ngModel>
+                        </label>
+                        <div *ngIf="!phone.valid && phone.touched" class="validationErrors">Phone isn't valid!</div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xs-6">
+                        <div class="form-group">
+                            <label for="address">
+                                Address:
+                                <input type="text"
+                                       placeholder="Enter address"
+                                       class="form-control"
+                                       id="address"
+                                       required
+                                       address
+                                       #address="ngModel"
+                                       name="address"
+                                       ngModel>
+                            </label>
+                            <div *ngIf="!address.valid && address.touched" class="validationErrors">Address isn't valid!</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label for="orderTime">
+                                    Order time:
+                                    <select name="orderTime"
+                                            id="orderTime"
+                                            required
+                                            orderTime
+                                            #orderTime="ngModel"
+                                            class="form-control"
+                                            ngModel>
+                                        <option value="1200">12 00</option>
+                                        <option value="1300">13 00</option>
+                                        <option value="1400">14 00</option>
+                                        <option value="1500">15 00</option>
+                                        <option value="1600">16 00</option>
+                                        <option value="1700">17 00</option>    
+                                    </select>
+                                    <div *ngIf="!orderTime.valid && orderTime.touched" class="validationErrors">Delivery time is required!</div>
+                                </label>
+                            </div>
+                        </div>
+
+                  </div>
+                  <div class="controlWrapper">
+                    <button class="btn btn-danger"
+                        type="submit"
+                        id="orderControl" 
+                        [disabled]="!form.valid">Order</button>
+                  </div>
+                  
+                </div>
+                  
+                
+            </form>
+          </div>
+      </div>
+      <div class="col-md-4">
+          <div id="cartWidget">
+              <div id="cartWidgetHeader">
+                  <h5>Cart</h5>
+              </div>
+             
+              <div id="productList">
+                <div *ngFor="let product of cart" class="productItem">
+                    <div class="productImgWrapper" (click)="navigateToProductDetailPage(product)">
+                        <img [src]="product.imgPath"  >
+                    </div>
+
+                    <div class="productTitle">
+                        {{ product.productTitle }} X {{ product.productQuantity || ''}}
+                    </div>
+
+                    <div class="productPrice">
+                        {{ product.productPrice * product.productQuantity }} $
+                    </div>
+
+                    <div class="deleteItem">
+                        <button class="btn btn-danger btn-sm" (click)="deleteProductFromList(product)">X</button>
+                    </div>
+                </div>
+              </div>
+
+              <div id="cartWidgetFooter">
+                  <div id="totalPriceWrapper">
+                      Total
+                  </div>
+
+                  <div id="totalPrice">
+                        {{ totalPrice}} $
+                    </div>
+              </div>
+
+              
+          </div>
+      </div>
+  </div>
+  
+</div>
+
+<ng-container *ngIf="isConfirmationPopUpEnabled">
+    <app-confirmation-popup (orderConfirmed)="onOrderSubmit(this.formData)"></app-confirmation-popup>
+</ng-container>
+
+<app-loading></app-loading>
+
+

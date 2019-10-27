@@ -1,0 +1,174 @@
+<div class="col-xs-12 col-md-12">
+  <form id="signUp"
+        [formGroup]="registrationForm"
+        (ngSubmit)="onSignUp()">
+
+    <div class="row">
+      <div class="col-md-6 col-xs-6">
+        <div class="form-group">
+          <label for="First Name">
+            First Name:
+
+          <input type="text"
+                 placeholder="Enter First Name"
+                 class="form-control"
+                 id="firstName"
+                 name="firstName"
+                 formControlName="firstName">
+          </label>
+        </div>
+        
+        <p *ngIf="!formField.get('firstName').valid && formField.get('firstName').touched" class="validationError">First name is not valid!</p>
+        <p *ngIf="formField.get('firstName').errors && formField.get('firstName').touched" class="validationError">Minimal length should be at least 4!</p>
+      </div>
+
+      <div class="col-md-6 col-xs-6">
+        <div class="form-group">
+          <label for="Last Name">
+            Last Name:
+
+          <input type="text"
+                 placeholder="Enter Last Name"
+                 class="form-control"
+                 id="lastName"
+                 name="lastName"
+                 formControlName="lastName">
+          </label>
+        </div>
+
+        <p *ngIf="!formField.get('lastName').valid && formField.get('lastName').touched" class="validationError">Last name is not valid!</p>
+        <p *ngIf="formField.get('lastName').errors && formField.get('lastName').touched" class="validationError">Minimal length should be at least 4!</p>
+      </div>
+
+      <div class="col-md-6 col-xs-6">
+        <div class="form-group">
+          <label for="login">
+            Login:
+
+          <input type="text"
+                 placeholder="Enter login"
+                 class="form-control"
+                 id="login"
+                 name="login"
+                 formControlName="login">
+          </label>
+        </div>
+
+        <p *ngIf="formField.get('login').errors && formField.get('login').touched " class="validationError">Login isn't valid!</p>
+        <p *ngIf="formField.get('login')?.errors?.minlength && formField.get('login').touched " class="validationError">Min length should be 4 !</p>
+        <p *ngIf="formField.get('login')?.errors?.fieldIsForbidden && formField.get('login').touched" class="validationError">User with such login is already exist!</p>
+        <p *ngIf="formField.get('login')?.errors?.isNetworkEnabled && formField.get('login').touched" class="validationError">There's no internet connection!</p>
+        
+      </div>
+
+    <div class="col-md-6 col-xs-6">
+      <div class="form-group">
+        <label for="phone">
+          Phone:
+        <input type="text"
+               id="phone"
+               name="phone"
+               class="form-control"
+               placeholder="Enter phone"
+               formControlName="phone">
+        </label>
+      </div>
+
+      <p *ngIf="formField.get('phone').errors && formField.get('phone').touched " class="validationError">Phone isn't valid!</p>
+      <p *ngIf="formField.get('phone')?.errors?.minlength && formField.get('phone').touched " class="validationError">Min length should be 10 !</p>
+    </div>
+
+    <div formGroupName = passwords class="col-md-12 col-xs-12" >
+      <div class="row">
+        <div class="col-md-6 col-xs-6">
+          <div class="form-group">
+          <label for="password">
+            Password:
+
+          <input type="text"
+                id="password"
+                name="password"
+                type="password"
+                class="form-control"
+                placeholder="Enter password"
+                formControlName="password">
+          </label>
+          </div>
+          
+          <p *ngIf="formField.get('passwords.password').errors && formField.get('passwords.password').touched " class="validationError">Password isn't valid!</p>
+          <p *ngIf="formField.get('passwords.password').password?.errors?.minlength && formField.get('passwords.password').touched " class="validationError">Min length should be 4 !</p>
+          <p *ngIf="formField.get('passwords')?.errors?.doesMatchPassword && formField.get('passwords').touched " class="validationError">Passwords don't match!</p>
+        </div>
+
+        <div class="col-md-6 col-xs-6">
+          <div class="form-group">
+            <label for="passwordRepeat">
+              Repeat password:
+
+            <input type="text"
+                   id="passwordRepeat"
+                   name="passwordRepeat"
+                   type="password"
+                   class="form-control"
+                   placeholder="Repeat password"
+                   formControlName="passwordRepeat">
+            </label>
+          </div>
+
+          <p *ngIf="formField.get('passwords.passwordRepeat').errors && formField.get('passwords.passwordRepeat').touched " class="validationError">Password isn't valid!</p>
+          <p *ngIf="formField.get('passwords.passwordRepeat')?.errors?.minlength && formField.get('passwords.passwordRepeat').touched " class="validationError">Min length should be 4 !</p>
+          <p *ngIf="formField.get('passwords')?.errors?.doesMatchPassword && formField.get('passwords').touched " class="validationError">Passwords don't match!</p>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-md-6 col-xs-6">
+      <div class="form-group">
+        <label for="email">
+          Email:
+        <input type="text"
+               placeholder="Enter email"
+               class="form-control"
+               id="email"
+               name="email"
+               formControlName="email">
+        </label>
+      </div>
+
+      <p *ngIf="formField.get('email').errors && formField.get('email').touched " class="validationError">Email isn't valid!</p>
+      <p *ngIf="formField.get('email')?.errors?.minlength && formField.get('email').touched " class="validationError">Min length should be 4 !</p>
+      <p *ngIf="formField.get('email')?.errors?.fieldIsForbidden && formField.get('email').touched " class="validationError">User with such email is already exist!</p>
+      <p *ngIf="formField.get('email')?.errors?.email && formField.get('email').touched " class="validationError">Email doensn't much the pattern!</p>
+      <p *ngIf="formField.get('email')?.errors?.isNetworkEnabled && formField.get('email').touched " class="validationError">There's no internet connection!</p>
+    </div>
+
+    <div class="col-md-6 col-xs-6">
+      <div class="form-group">
+        <label for="address">
+          Address:
+        <input type="text"
+               id="address"
+               name="address"
+               class="form-control"
+               placeholder="Enter address"
+               formControlName="address">
+        </label>
+      </div>
+
+      <p *ngIf="formField.get('address').errors && formField.get('address').touched " class="validationError">Address isn't valid!</p>
+      <p *ngIf="formField.get('address')?.errors?.minlength && formField.get('address').touched " class="validationError">Min length should be 4 !</p>
+    </div>
+
+    </div>
+    <p *ngIf="!onlineMode" class="validationError">There's no internet connection!</p>
+
+    <button class="btn btn-success"
+            type="submit"
+            >
+      Sign Up
+    </button>
+  </form>
+</div>
+<!--[disabled]="!registrationForm.valid"-->

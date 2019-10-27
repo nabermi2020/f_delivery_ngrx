@@ -1,0 +1,67 @@
+
+<div id="productDetailWrapper">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="logoWrapper">
+          <img [src]="productDetails.imgPath" [alt]="productDetails.productTitle">
+        </div></div>
+      <div class="col-md-9">
+          <div class="productInfoWrapper">
+            <div class="productTitle">
+               {{ productDetails.productTitle  }}
+            </div>
+
+            <div class="productPrice">
+                {{ productDetails.productPrice }} $
+            </div>
+
+            <div class="productQuantityWrapper">
+              <button id="decreaseProductQuantity"
+                      (click)="decreaseProdCounterOnOne()">-</button>
+              <input type="text"
+                     class="productQuantity"
+                     disabled
+                     value="1"
+                     [(ngModel)]="productQuantity">
+              <button id="increaseProdQuantity"
+                      (click)="increaseProductCounterOnOne()">+</button>
+            </div>
+
+            <div class="addToCartWrapper">
+              <button class="btn btn-success" (click)="addToCart()">Add To Cart</button>
+            </div>
+
+            <div class="sizeAndWeightWrapper">
+                {{ productDetails.productSize }}sm {{ productDetails.productWeight }}gram
+            </div>
+  
+          </div>
+    
+      </div>
+
+       
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="ingredientsWrapper">
+          <h4>Ingredients:</h4>
+          <ul>
+            <li *ngFor="let ingredient of ingredients">
+              {{ ingredient }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="productRecipe">
+          <h4>Description</h4>
+          {{  productDetails.productsDetails }}
+        </div>
+        
+      </div>
+    </div> 
+</div>
+
+

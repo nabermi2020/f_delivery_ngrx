@@ -1,0 +1,47 @@
+<div id="productCart">
+    <div id="productCartHeader">
+        <header> 
+            <h4>Product Cart</h4>
+        </header>
+    </div>
+
+    <div id="products" class="align-middle">
+        <div id="emptyCart" *ngIf="cart.length == 0" >
+            <h2>Cart is empty</h2>
+        </div>
+
+        <div *ngFor="let product of cart"
+              class="product">
+            <div class="productLogoWrapper" (click)="navigateToProductDetailsPage(product)">
+                <img [src]="product.imgPath" class="img-responsive"  >
+            </div>
+
+            <div class="productTitle">
+                <h5> {{ product.productTitle }} </h5>
+            </div>
+
+            <div class="productPrice">
+                <h5>{{ product.productPrice * product.productQuantity}} $</h5>
+            </div>
+
+            <div class="productQuantity">
+                <button (click)="deleteOneProduct(product)">-</button>
+                <input type="text"
+                       [value]="product.productQuantity"
+                       class="prodQuantity"
+                       disabled>
+                <button (click)="addOneProduct(product)">+</button>
+            </div>
+
+            <div class="deleteItem">
+                <button class="btn btn-danger" (click)="deleteCurrentProduct(product)">X</button>
+            </div>
+             
+        </div>     
+    </div>
+
+    <div id="controls" *ngIf="cart.length">
+        <button class="btn btn-success" id="buyProducts" style="min-width:180px"(click)="makeAnOrder()">BUY</button>
+        <div id="totalPrice">{{ totalPrice }} $</div>
+    </div>
+</div>

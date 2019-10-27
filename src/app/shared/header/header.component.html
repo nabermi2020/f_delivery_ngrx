@@ -1,0 +1,23 @@
+<header id="headerSection">
+  <div id="activeCategory">
+    <h2>{{ activeCategory }}</h2>
+  </div>
+  <div id="controlsWrapper">
+    <div id="activeUser">
+      Hello <a [routerLink]="['profile', 'user-info']"><b>{{ activeUser.firstName}} {{ activeUser.lastName | shorten:1 }}</b></a> / 
+      <a (click)="logOut()">Log Out</a>
+    </div>
+    <div id="cart" (click)="openCart()">
+      <span id="cartCounter" *ngIf="productsQuantity != 0">{{ productsQuantity || 0 }}</span>
+     <!--
+      <div id="price">
+          {{ totalPrice || 0 }}  $
+        </div>
+        -->
+      <img src="./../../../assets/cart.png">
+       
+      
+    </div>
+  </div>
+</header>
+

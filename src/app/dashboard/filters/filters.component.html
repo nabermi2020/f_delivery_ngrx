@@ -1,0 +1,5 @@
+<ul class="productsFilter">
+    <li *ngFor="let filter of activeFilter"  [ngClass]="activeCategory == filter ? 'activeCat' : ''" (click)="filterProductsByCategory(filter)">
+        {{ filter }}
+    </li>
+</ul>

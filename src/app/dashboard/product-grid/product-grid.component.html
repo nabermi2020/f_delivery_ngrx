@@ -1,0 +1,28 @@
+<div id="products-grid">
+  <div class="row">
+    <div class="col-md-6">
+      <app-filters (activeCategorySelected)="setFilterCategory($event)" *ngIf="isSearchFailure && onlineMode"></app-filters>
+    </div>
+    <div class="col-md-6" *ngIf="onlineMode">
+      <app-product-search (searchDone)="setProducts($event)" ></app-product-search>
+    </div>
+  </div>
+  
+  
+    <div class="row" *ngIf="onlineMode">
+       
+          <div class="col-md-4 col-sm-6" *ngFor="let product of products | filterProducts:activeFilter">
+              <app-product-item [productData]='product'></app-product-item>
+          </div>
+          
+          <div *ngIf="!isSearchFailure" class="noProducts"> 
+            <img src="../../../assets/Error_Empty states.png" style="width: 42%;
+            min-width: 450px; margin-top: -59px;">
+          </div>
+          
+    </div>
+
+    <div class="row" *ngIf="!onlineMode">
+      <img src="../../../assets/no-internet-connection.png" class="networkConnectionError">
+    </div>
+  </div>

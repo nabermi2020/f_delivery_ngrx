@@ -1,0 +1,16 @@
+<div id="sideBar">
+  <nav id="productCategory">
+    
+    <div id="logo">
+      <a [routerLink]="['/dashboard/products', 'pizza']">
+        <img src="../../../assets/logo.png" class="sideBarLogo">
+      </a>
+    </div>
+    <ul>
+      <li routerLinkActive = "activeTab" [routerLink]="['/dashboard', 'products', 'pizza']"><a  >{{ 'Pizza' | uppercase }}</a></li>
+      <li routerLinkActive = "activeTab" [routerLink]="['/dashboard/products/', 'drinks']"><a >{{ 'Drinks' | uppercase }}</a></li>
+      <li routerLinkActive = "activeTab" [routerLink]="['/dashboard/products/', 'salads']"><a >{{ 'Salads' | uppercase }}</a></li>
+  </ul>
+  </nav>
+</div>
+

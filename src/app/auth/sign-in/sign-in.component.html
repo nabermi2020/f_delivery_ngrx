@@ -1,0 +1,49 @@
+<div class="col-xs-12 col-md-12">
+  <form id="signIn"
+        #form=ngForm
+        (ngSubmit)="onLogin(form)">
+
+    <div class="form-group">
+      <label for="login">
+        Login:
+      <input type="text"
+             placeholder="Enter login"
+             class="form-control"
+             id="login"
+             name="login"
+             required
+             login
+             ngModel
+             #login="ngModel">
+      </label>
+    </div>
+
+    <p *ngIf="!login.valid && login.touched" class="validationErrors">Login is not valid!</p>
+
+    <div class="form-group">
+      <label for="password">
+        Password:
+      <input type="password"
+             placeholder="Enter password"
+             class="form-control"
+             id="password"
+             required
+             password
+             #password="ngModel"
+             name="password"
+             ngModel>
+      </label>
+    </div>
+    <p *ngIf="!password.valid && password.touched" class="validationError">Password is not valid!</p>
+    <p *ngIf="!authResults.authStatus && authResults.onlineMode && password.touched" class="validationError">Your login and password are incorect!</p>
+    <p *ngIf="!authResults.onlineMode" class="validationError">There's no internet connection!</p>
+
+    <button class="btn btn-primary"
+            type="submit"
+            [disabled]="!form.valid">
+      Log In
+    </button>
+  </form>
+</div>
+
+ 

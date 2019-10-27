@@ -1,0 +1,152 @@
+.product {
+    width: 90%;
+    height: 370px; 
+    overflow: hidden;
+    text-align: center;
+    margin-top: 20px;
+    position: relative;   
+}
+
+.product:hover .imgWrapper {
+    cursor: pointer;
+    transition: all 0.25s ease-in-out .05s;
+    transform: scale(1.1);
+    opacity: 0.85;
+}
+
+.imgWrapper img {
+    width: 100%;
+    height: 270px;
+    overflow: hidden;
+}
+ 
+.product >.productDescription {
+    background: black;
+    width: 100%;
+    height: 30%;
+    position: absolute;
+    color: white;
+}
+
+.addToCartWrapper {
+    background: rgb(247, 65, 104);
+    visibility: hidden;  
+    text-align: center;
+    position: absolute;
+    height: 15%;
+    line-height: 40px;
+    bottom: 0;
+    width: 100%;
+    opacity: 0;
+}
+
+.product:hover .addToCartWrapper {
+    visibility: visible;
+    transition: opacity .15s ease-in .05s;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.productQuantity {
+    width: 33%;
+    position: relative;
+    top: 14%; 
+    height: 35px;
+    //border: 1px solid white;
+    float: left;
+    color: white;
+
+    .prodQuantity {
+        width: 35px;
+        height: 35px;
+        position: relative;
+        top: -1px;
+        background: black;
+        color: white;
+        text-align: center;
+        outline-offset: 0;
+        border: 0;
+        font-weight: 600;
+    }
+
+    #increaseProdQuantity,
+    #decreaseProdQuantity {
+        height: 35px;
+        text-align: center;
+        line-height: 25px;
+        font-weight: 600;
+        background: transparent;
+        border: 0;
+        outline: 0;
+        font-size: 22px;
+
+        &:hover {
+            color: white;
+        }
+    }
+
+
+}
+
+.addToCart {
+    float: left;
+    width: 40%;
+    height: 47px;
+    line-height: 47px;
+    color: white;
+    transition: margin-top .5s ease-in .3s;
+}
+
+.productPrice {
+    float: left;
+    width: 25%;
+    height: 100%;
+    color: white;
+    height: 47px;
+    line-height: 47px;
+    font-weight: 600;
+}
+
+.productInfoAndPrice {
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    position: relative;
+}
+
+.productWeight {
+    position: absolute;
+    padding-left: 1.5%;
+    width: 50%;
+}
+
+.prPrice {
+    position: absolute;
+    right: 0;
+    padding-right: 1.5%;
+    width: 50%;
+    color: rgb(233, 33, 33);
+    font-size: 18px;
+    font-weight: 600;
+    text-align: end;
+}
+
+.productTitle {
+    width: 100%;
+    text-align: left;
+    position: relative;
+    left: 10%;
+    width: 90%;
+    height: 30px;
+}
+
+.ingredients {
+    position: relative;
+    left: 10%;
+    width: 90%;
+    height: 45px;
+    line-height: 18px;
+    font-size: 11px;
+    text-align: start;
+    word-wrap: break-word;
+}

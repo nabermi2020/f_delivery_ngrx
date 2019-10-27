@@ -1,0 +1,148 @@
+<div id="editModal">
+    <div id="editModalHeader">
+        <header> 
+            <h4 id="editModalTitle">Edit profile</h4>
+            <button class="btn btn-danger" (click)="closeModal()">X</button>
+        </header> 
+    </div>
+ 
+    <form [formGroup]="editForm">
+        <div class="row">
+            <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                    <label for="First Name">
+                        First Name:
+                        
+                        <input type="text"
+                               placeholder="Enter First Name"
+                               class="form-control"
+                               id="firstName"
+                               name="firstName"
+                               formControlName="firstName">
+                      </label>
+                      <div *ngIf="getDataByFieldName('firstName').touched">
+                        <p *ngIf="getDataByFieldName('firstName').errors" class="validationError">First Name isn't valid!</p>
+                        <p *ngIf="getDataByFieldName('firstName')?.errors?.minlength" class="validationError">Min length should be 4 !</p>
+                      </div>
+                </div>
+          
+            </div>
+
+            <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                    <label for="Last Name">
+                        Last Name:
+                        
+                        <input type="text"
+                               placeholder="Enter Last Name"
+                               class="form-control"
+                               id="lastName"
+                               name="lastName"
+                               formControlName="lastName">
+                      </label>
+                      <div *ngIf="getDataByFieldName('lastName').touched">
+                        <p *ngIf="getDataByFieldName('lastName').errors" class="validationError">Last Name isn't valid!</p>
+                        <p *ngIf="getDataByFieldName('lastName')?.errors?.minlength" class="validationError">Min length should be 4 !</p>
+                      </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                    <label for="phone">
+                        Phone:
+                        
+                        <input type="text"
+                               placeholder="Enter phone"
+                               class="form-control"
+                               id="phone"
+                               name="phone"
+                               formControlName="phone">
+                      </label>
+                      <div *ngIf="getDataByFieldName('phone').touched">
+                        <p *ngIf="getDataByFieldName('phone').errors" class="validationError">Phone isn't valid!</p>
+                        <p *ngIf="getDataByFieldName('phone')?.errors?.minlength" class="validationError">Min length should be 10 !</p>
+                      </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                    <label for="address">
+                        Address:
+                        
+                        <input type="text"
+                               placeholder="Enter address"
+                               class="form-control"
+                               id="address"
+                               name="address"
+                               formControlName="address">
+                      </label>
+                      <div *ngIf="getDataByFieldName('address').touched">
+                        <p *ngIf="getDataByFieldName('address').errors" class="validationError">Address isn't valid!</p>
+                        <p *ngIf="getDataByFieldName('address')?.errors?.minlength" class="validationError">Min length should be 5 !</p>
+                      </div>
+                </div>
+            </div>
+
+            <div formGroupName = passwords class="col-md-12 col-xs-12" >
+            <div class="row">
+                <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                    <label for="password">
+                        Password:
+                        
+                        <input type="text"
+                               placeholder="Enter password"
+                               class="form-control"
+                               id="password"
+                               type="password"
+                               name="password"
+                               formControlName="password">
+                      </label>
+                </div>
+                <div *ngIf="getDataByFieldName('passwords.password').touched">
+                    <p *ngIf="getDataByFieldName('passwords.password').errors" class="validationError">Password isn't valid!</p>
+                    <p *ngIf="getDataByFieldName('passwords.password')?.errors?.minlength" class="validationError">Min length should be 4 !</p>
+                    <p *ngIf="getDataByFieldName('passwords')?.errors?.doesMatchPassword" class="validationError">Passwords don't match!</p>     
+                </div>
+               
+            </div>
+
+            <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                    <label for="passwordRepeat">
+                        Repeat Password:
+                        
+                        <input type="text"
+                               placeholder="Repeat password"
+                               class="form-control"
+                               id="passwordRepeat"
+                               type="password"
+                               name="passwordRepeat"
+                               formControlName="passwordRepeat">
+                      </label>
+                </div>
+               
+                <div *ngIf="getDataByFieldName('passwords.passwordRepeat').touched">
+                    <p *ngIf="getDataByFieldName('passwords.passwordRepeat').errors" class="validationError">Password isn't valid!</p>
+                    <p *ngIf="getDataByFieldName('passwords.passwordRepeat')?.errors?.minlength" class="validationError">Min length should be 4 !</p>
+                    <p *ngIf="getDataByFieldName('passwords')?.errors?.doesMatchPassword" class="validationError">Passwords don't match!</p>
+                </div>
+            </div>
+
+           
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-12 " style="text-align: center">
+                <button class="btn btn-success"
+                        type="button"
+                        (click)="saveChanges()"
+                        [disabled]="!editForm.valid">Save</button>
+            </div>
+        </div>
+    </form>
+    
+   
+</div>

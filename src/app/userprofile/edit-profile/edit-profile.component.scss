@@ -1,0 +1,45 @@
+#editModal {
+    position: absolute;
+    background:white;
+    z-index: 20;
+    min-height: 350px;
+    height: auto;
+    width: 60%;
+    top: 8%;
+    left: 15%;
+
+    #editModalHeader {
+        height: 35px;
+        width: 100%;
+        background: rgb(127, 80, 216); 
+        color: white;
+        text-align: center;
+
+        #editModalTitle {
+            display: inline-block;
+        }
+
+        button {
+            position: absolute;
+            right: 0;
+            height: 35px;
+        }
+
+        .controls {
+            text-align: center;
+        }
+        
+    }
+
+}
+
+form {
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+.validationError {
+    color: red;
+    font-weight: 600;
+    font-size: 12px;
+}

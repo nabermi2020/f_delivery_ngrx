@@ -1,0 +1,49 @@
+{
+  "pizza": [
+    {
+      "id": 448,
+      "productTitle": "Піца Емілія",
+      "imgPath": "./../../assets/pizza1.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": "Шинка, моцарела, помідори, кукурудза, соус часниковий",
+      "productPrice": 200
+    },
+    {
+      "id": 417,
+      "productTitle": "Чотири Сири Класична",
+      "imgPath": "./../../assets/pizza3.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": " Моцарела, пармезан, сир чедер, сир дорблю, соус вершковий, білий сир Брі",
+      "productPrice": 199
+    },
+    {
+      "id": 406,
+      "productTitle": "Піца Емілія",
+      "imgPath": "./../../assets/pizza1.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": "Шинка, моцарела, помідори, кукурудза, соус часниковий",
+      "productPrice": 200
+    },
+    {
+      "id": 83,
+      "productTitle": "Чотири Сири Класична",
+      "imgPath": "./../../assets/pizza3.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": " Моцарела, пармезан, сир чедер, сир дорблю, соус вершковий, білий сир Брі",
+      "productPrice": 199
+    },
+    {
+      "id": 180,
+      "productTitle": "Піца Емілія",
+      "imgPath": "./../../assets/pizza1.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": "Шинка, моцарела, помідори, кукурудза, соус часниковий",
+      "productPrice": 200
+    }
+  ]
+}

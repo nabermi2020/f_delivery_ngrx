@@ -1,0 +1,118 @@
+
+   .orderItem {
+    min-height: 45px;
+    height: auto;
+    line-height: 45px;
+    opacity: 0.9;
+    width: 100%;
+    //border-bottom: 1px solid lightgrey;
+    position: relative;
+    background: white;
+    z-index: 5;
+    margin-bottom: 3px;
+
+    &:first-child {
+        border-top: 1px solid lightgrey;
+    }
+
+    &:last-child {
+        border-bottom: 0;
+    }
+
+    &:hover {
+        cursor: pointer;
+        box-shadow: 1px 1px 10px;
+        opacity: 1;
+    }
+
+    .orderId {
+     display: inline-block;
+     padding-left: 15px;
+    }
+
+    .orderDate {
+        display: inline-block;
+        margin-left: 10%;
+    }
+
+    .orderTime {
+        display: inline-block;
+        position: absolute;
+        right: 5%;
+    }
+
+    .productsQuantity {
+        display: inline-block;
+        margin-left: 20px;
+    }
+    
+    .totalOrderAmount {
+         display: inline-block;
+         margin-left: 25px;
+    }
+    
+    .orderInfo {
+        //border-bottom: 1px solid lightgray;
+    }
+
+    .orderDetail {
+        position: relative;
+        right: 0;
+        min-height: 50px;
+        height: auto;
+        width: 100%;
+        
+        //border: 1px solid red;
+
+        .orderedProducts {
+            margin-bottom: 3px;
+            border-bottom: 1px solid lightgray;
+
+            &:last-child {
+                border-bottom: 0;
+            }
+
+            &:first-child {
+                border-top: 1px solid lightgray;
+            }
+
+            .productImgWrapper {
+                width: 70px;
+                position: relative;
+                display: inline-block;
+                background-size: cover; 
+                opacity: 0.9;
+
+                &:hover {
+                    opacity: 1;
+                    cursor: pointer;
+                    transform: scale(1.015, 1.015);
+                }
+
+                    img {
+                        width: 70px;
+                    }
+            }
+
+            .productTitle {
+                width: 50%;
+                display: inline-block;
+                text-align: center;
+                line-height: 100%;
+                font-size: 12px;
+            }
+
+            .productPrice {
+                width: 10%;
+                display: inline-block;
+                position: absolute;
+                right: 2%;
+                text-align: center;
+                font-weight: 600;
+            }
+        }
+
+    }
+
+}
+

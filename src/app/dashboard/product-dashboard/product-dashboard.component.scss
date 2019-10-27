@@ -1,0 +1,40 @@
+#dashboard {
+    width: 100%;   
+    height: 100%;
+    position: relative;
+
+    #edit-modal-shadow {
+        width: 100%;
+        position: absolute;
+        z-index: 10;
+        background: rgba(94, 84, 84, 0.596);
+        height: 100%;
+    }
+}
+
+#leftSection {
+    width: 15%;
+    position: relative;
+    background-color: black; 
+    height: 100%;
+}
+
+#rightSection {
+    width: 85%;
+    height: 100%;
+    margin: 0 auto;
+     
+   // min-height: calc(100vh - 200px);
+    background-color: white; 
+    position: absolute;
+    left: 15%;
+    overflow-x: hidden;
+    top: 0; 
+
+    #wrapper{ 
+        position: relative;
+        min-height: 100%;
+        padding-bottom: 350px;
+    }
+}
+

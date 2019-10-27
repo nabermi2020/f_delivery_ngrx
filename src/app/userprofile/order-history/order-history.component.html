@@ -1,0 +1,22 @@
+<div id="orderHistoryWrapper">
+    <div *ngFor="let order of orders">
+      <app-order-item [order]="order"></app-order-item>
+    </div>
+</div>
+
+<div id="ordersPagination" *ngIf="pages != 1 && pages != 0">
+  
+  <button class="btn btn-success"
+          *ngFor="let page of ordersForPages"
+          (click)="getOrdersForPage(page.pageNumber)">
+          {{ page.pageNumber }}
+  </button>
+
+
+  
+</div>
+
+<div *ngIf="!onlineMode">
+  <img src="../../../assets/no-internet-connection.png" class="networkConnectionError">
+</div>
+ 

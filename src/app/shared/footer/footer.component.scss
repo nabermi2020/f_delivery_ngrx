@@ -1,0 +1,41 @@
+footer {  
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    bottom: 0;
+    background: lightgray;
+
+    #logoWrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding-top: 30px;
+
+        #footerLogo {
+            width: 100px;
+            height: 100px;
+             
+
+        }
+
+        #footerTextWrapper {
+            font-weight: 600;
+            font-family: 'Mansalva';
+            font-size: 16px;
+        }
+
+        #copyRight {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        #developedBy {
+            position: absolute;
+            right: 1.5%;
+            font-size: 12px;
+
+        }
+    }   
+ 
+}

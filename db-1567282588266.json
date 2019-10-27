@@ -1,0 +1,87 @@
+{
+  "pizza": [
+    {
+      "id": 448,
+      "productTitle": "Emilia's Pizza",
+      "imgPath": "./../../assets/pizza1.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": "Ham, mozzarella, tomatoes, corn, garlic sauce",
+      "productPrice": 200
+    },
+    {
+      "id": 417,
+      "productTitle": "Four Cheeses Classic",
+      "imgPath": "./../../assets/pizza3.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": "Mozzarella, parmesan cheese, cheddar cheese, Dor blue cheese, cream sauce, white Brie cheese",
+      "productPrice": 199
+    },
+    {
+      "id": 448,
+      "productTitle": "Emilia's Pizza",
+      "imgPath": "./../../assets/pizza1.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": "Ham, mozzarella, tomatoes, corn, garlic sauce",
+      "productPrice": 200
+    },
+    {
+      "id": 417,
+      "productTitle": "Four Cheeses Classic",
+      "imgPath": "./../../assets/pizza3.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": "Mozzarella, parmesan cheese, cheddar cheese, Dor blue cheese, cream sauce, white Brie cheese",
+      "productPrice": 199
+    },
+    {
+      "id": 448,
+      "productTitle": "Emilia's Pizza",
+      "imgPath": "./../../assets/pizza1.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": "Ham, mozzarella, tomatoes, corn, garlic sauce",
+      "productPrice": 200
+    },
+    {
+      "id": 417,
+      "productTitle": "Four Cheeses Classic",
+      "imgPath": "./../../assets/pizza3.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": "Mozzarella, parmesan cheese, cheddar cheese, Dor blue cheese, cream sauce, white Brie cheese",
+      "productPrice": 199
+    },
+    {
+      "id": 419,
+      "productTitle": "Four Cheeses Classic",
+      "imgPath": "./../../assets/pizza3.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": "Mozzarella, parmesan cheese, cheddar cheese, Dor blue cheese, cream sauce, white Brie cheese",
+      "productPrice": 199
+    }
+  ],
+  "drinks": [
+    {
+      "id": 2,
+      "productTitle": "Four Cheeses Classic",
+      "imgPath": "./../../assets/pizza3.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": "Mozzarella, parmesan cheese, cheddar cheese, Dor blue cheese, cream sauce, white Brie cheese",
+      "productPrice": 199
+    },
+    {
+      "id": 3,
+      "productTitle": "Four Cheeses Classic",
+      "imgPath": "./../../assets/pizza3.jpg",
+      "productWeight": "550",
+      "productSize": "30",
+      "productDescription": "Mozzarella, parmesan cheese, cheddar cheese, Dor blue cheese, cream sauce, white Brie cheese",
+      "productPrice": 199
+    }
+  ]
+}
