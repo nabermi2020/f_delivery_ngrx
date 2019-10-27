@@ -24,7 +24,6 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   
   constructor(private productsService: ProductService,
               private route: ActivatedRoute,
-              private editMode: EditModalService,
               private loadingService: LoadingService,
               private editModal: EditModalService) { }
 
@@ -69,9 +68,6 @@ export class ProductGridComponent implements OnInit, OnDestroy {
       this.editModal.toggleEditMode();
   }
 
-/**
- * Get products using 'productService'
- */  
   getProducts() {
     this.loadingService.toggleLoading();
     this.editModal.toggleEditMode();
@@ -95,10 +91,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
     this.editModal.toggleEditMode();
   }
 
- /**
-  * Set filter category
-  * @param {String} product category 
-  */ 
+
   setFilterCategory(cat) {
     this.activeFilter = cat;
   }

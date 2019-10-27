@@ -46,7 +46,7 @@ export class ProductService {
         const productsObservable = Observable.create( (observer: Observer<any>) => {
         let onlineMode = navigator.onLine;
         
-        if (!onlineMode) {
+        if (onlineMode) {
             this.http.get(`${this.apiUrl}/pizza`, {headers})
             .subscribe(
                 (productList: Array<any>) => {
@@ -86,7 +86,7 @@ export class ProductService {
         const headers = new HttpHeaders({'Content-type': 'application/json'});
         let online = navigator.onLine;
         
-        if (!online) {     
+        if (online) {     
             this.http.get(`${this.apiUrl}/${category}`, {headers})
                 .subscribe(
                     (products: Array<any>) => {
@@ -122,75 +122,6 @@ export class ProductService {
 
     getSelectedProduct() {
         return this.selectedProduct;
-    }
-
-    searchProducts(query) {
-        const searchObservable = Observable.create( (observer: Observer<any>) => {
-        let onlineMode = navigator.onLine;
-        
-        if (!onlineMode) {
-            this.searchProductsOnline(query, observer);
-        } else {
-            this.searchProductOffline(query, observer);
-        }
-        });
-               
-        return searchObservable;
-    }
-
-    searchProductOffline(query, observer) {
-        let productsDetail = JSON.parse(localStorage.getItem('productList'));
-        let localeProductList = productsDetail.products;
-        let searchRes = [];
-        
-        localeProductList.filter( (item) => {
-            if (item.productTitle == query) {
-                searchRes.push(item);
-            }
-        });
-
-        if (searchRes.length > 0) {
-            observer.next(searchRes);
-        } else if (searchRes.length == 0) {
-            observer.next([]);
-        }
-    }
-
-    searchProductsOnline(query, observer) {
-        const requestedWords = query.split(' ');
-        let queryTemplate = requestedWords.length > 1 ? requestedWords.join('%20') : query;
-        const result = combineLatest(
-            this.searchProductsByCategory('salads', queryTemplate),
-            this.searchProductsByCategory('drinks', queryTemplate),
-            this.searchProductsByCategory('pizza', queryTemplate)
-        );
-           
-        result.subscribe(
-            (searchResults) => {
-                let results = searchResults ? this.getFormattedResults(searchResults) : []; 
-                observer.next(results);
-            }, 
-
-            (searchError) => {
-                console.log(searchError);
-                observer.error('All');
-            }
-        );
-    }
-
-    getFormattedResults(searchResults) {
-        const results = [];
-        searchResults.forEach(searchResByProdCategory => {
-          searchResByProdCategory.forEach(item => {
-            results.push(item);
-          });
-        });
-    
-        return results;
-    }
-
-    searchProductsByCategory(category, query): Observable<any> {
-        return this.http.get(`${this.apiUrl}/${category}?productTitle=${query}`);
     }
 
     getResults() {

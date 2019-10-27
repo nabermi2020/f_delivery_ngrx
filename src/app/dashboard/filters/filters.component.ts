@@ -35,10 +35,6 @@ export class FiltersComponent implements OnInit, OnDestroy {
     );
   }
 
- /**
-  * Set active category
-  * @param {String} product's category 
-  */ 
   filterProductsByCategory(filter) {
     this.activeCategory = filter;
     this.activeCategorySelected.emit(filter);

@@ -17,13 +17,9 @@ export class ProductDashboardComponent implements OnInit, OnDestroy {
   isModalEnabled: boolean = false;
   editMode = new Subscription();
 
-  constructor(private authService: AuthService,
-              private productsService: ProductService,
-              private route: ActivatedRoute,
-              private editModal: EditModalService,
+  constructor(private editModal: EditModalService,
               private cartService: ProductCart,
-              private changeDetector: ChangeDetectorRef,
-              private loadingService: LoadingService) { }
+              private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.subscribeToModalToggling();

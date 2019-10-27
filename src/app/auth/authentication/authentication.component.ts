@@ -32,7 +32,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         }
       );
 
-    this.isAuthenticated();
+    //this.isAuthenticated();
   }
 
   isAuthenticated() {

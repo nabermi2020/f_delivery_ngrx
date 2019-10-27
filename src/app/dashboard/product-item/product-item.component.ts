@@ -15,29 +15,20 @@ export class ProductItemComponent implements OnInit {
   success: boolean = false;
   productQuantity: number = 1;
   
-
-  constructor(private productCartService: ProductCart, private router: Router, private productService: ProductService) { }
+  constructor(private productCartService: ProductCart) { }
 
   ngOnInit() { }
 
- /**
-  * Add product to cart
-  */ 
   addProductToCart() {
     this.success = true;
     this.productData.productQuantity = this.productQuantity;
-    this.productCartService.addProducts(this.productData);
+    //this.productCartService.addProducts(this.productData);
 
     setTimeout(() => {
       this.success = false;
     }, 1000);
     
     this.productQuantity = 1;
-  }
-
-  navigateToPdp() {
-    this.productService.setSelectedProduct(this.productData);
-    this.router.navigate(['dashboard/product-details', this.productData.id]);
   }
 
   increaseProdCounterOnOne() {
