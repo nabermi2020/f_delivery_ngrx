@@ -4,6 +4,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EditModalService } from 'src/app/shared/services/edit-modal.service';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as fromAuth from './../store/auth.reducers';
+import * as authListActions from './../store/auth.actions';
  
 
 @Component({
@@ -18,10 +21,11 @@ export class SignInComponent implements OnInit, OnDestroy {
     onlineMode: navigator.onLine
   };
    
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+              private store: Store<fromAuth.State>) {}
 
   ngOnInit() {
-    this.subscribeToAuthResults();
+   // this.subscribeToAuthResults();
   }
 
   subscribeToAuthResults() {
@@ -40,18 +44,28 @@ export class SignInComponent implements OnInit, OnDestroy {
   onLogin(form: NgForm) {
     const { login, password } = form.value;
     const credentials = {
-      "login": login,
-      "password": password
+      login: login,
+      password: password
     };
+   // console.log(credentials);
     
-    this.authService.signIn(login, password);
-   
-    if (this.authService) {
-      localStorage.setItem("userInfo", JSON.stringify(credentials));
-    }      
+   // this.authService.signIn(login, password);
+    
+    //this.store.dispatch(new authListActions.SignIn());
+    this.store.select('auth')
+      .subscribe(res => {
+        console.log(res);
+      });
+
+    this.store.dispatch(new authListActions.TrySignIn({login: login, password: password}));
+    
+    
+    // if (this.authService) {
+    //   localStorage.setItem("userInfo", JSON.stringify(credentials));
+    // }      
   }
 
   ngOnDestroy() {
-    this.authStatus.unsubscribe();
+    //this.authStatus.unsubscribe();
   }
 }

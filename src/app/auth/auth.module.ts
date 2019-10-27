@@ -1,3 +1,5 @@
+import { AuthEffects } from './store/auth.effects';
+import { StoreModule } from '@ngrx/store';
 import { AuthRoutingModule } from './auth-routing.module';
 import { NgModule } from '@angular/core';
 import { SignInComponent } from './sign-in/sign-in.component';
@@ -6,7 +8,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { SharedModule } from '../shared/shared.module';
-
+import { authReducers } from './store/auth.reducers';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
     declarations: [
@@ -19,6 +22,8 @@ import { SharedModule } from '../shared/shared.module';
         FormsModule,
         AuthRoutingModule,
         ReactiveFormsModule,
+        StoreModule.forRoot({auth: authReducers}),
+        EffectsModule.forRoot([AuthEffects])
        // SharedModule
     ],
     exports: [

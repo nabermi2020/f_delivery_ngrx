@@ -20,7 +20,8 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule,
     AuthModule,
-    HttpClientModule
+    HttpClientModule,
+
   ],
   providers: [
     AuthGuard,
@@ -29,7 +30,8 @@ import { AppComponent } from './app.component';
     EditModalService,
     ProductCart,
     LoadingService,
-    ErrorService
+    ErrorService,
+   
   ],
   bootstrap: [AppComponent]
 })

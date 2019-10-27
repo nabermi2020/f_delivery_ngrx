@@ -1,13 +1,10 @@
-import { LoadingService } from '../../shared/services/loading.service';
-import { ProductCart } from '../../shared/services/product-cart.service';
+
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Observable, Observer } from 'rxjs';
 import { User } from '../user.model';
-import { EditModalService } from '../../shared/services/edit-modal.service';
 import { environment } from 'src/environments/environment';
-import { ErrorService } from '../../shared/services/error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +40,7 @@ export class AuthService {
       .subscribe(
         (authResults: Response) => {
           this.onAunthenticateUserOnlineSuccess(authResults, authObserver);
+          this.router.navigate(['dashboard/products/pizza']);
         },
 
         (err: Response) => {
@@ -53,7 +51,7 @@ export class AuthService {
 
   onAunthenticateUserOnlineSuccess(authResults, authObserver: Observer<any>) {
       let onlineMode = navigator.onLine;
-      console.log(authResults);
+      //console.log(authResults);
       localStorage.setItem('userInfo', JSON.stringify(authResults[0]));
       let authStatus = this.getAuthStatus(authResults) == true ? true : false;
       authObserver.next({ authStatus: authStatus, onlineMode: onlineMode });
@@ -102,9 +100,6 @@ export class AuthService {
     return authStatus;
   }
 
-/**
- * Update user data
- */
   updateUserData() {
     let onlineMode = navigator.onLine;
     if (onlineMode) {
@@ -114,20 +109,13 @@ export class AuthService {
       this.router.navigate([`dashboard/products/${activeCategory}`]);
     }
   }
-
-/**
- * Logout user from the active session
- */  
+ 
   logOut() {
     this.authResults.authStatus = false;
     this.isUserAuthorized.next(this.authResults);
     localStorage.removeItem('userInfo');
   }
 
- /**
-  * Register new user and navigate to the 'sign-in'
-  * @param {User} new user instance
-  */ 
   signUp(users) {
     const headers = new HttpHeaders({'Content-type': 'application/json'});
      
@@ -146,37 +134,19 @@ export class AuthService {
     alert('Something went wrong, try again!!!');
   }
 
-/**
- * Check user's login existence in DB
- * @param {User} user's login 
- * @return {Observable} result with array of 1 user if there's user with the same login
- */
   checkFieldExistense(field: string, value: string): Observable<any> {
     const headers = new HttpHeaders({'Content-type': 'application/json'});
     return this.http.get(`${this.apiUrl}/users?${field}=${value}`, { headers });
   }
 
-/**
- * Return user's authentication status
- * @return {boolean} auth status;
- */
   isAuthorized(): boolean {
     return this.isAuthenticated;
   }
 
- /**
-  * Return current user's info
-  * @return {obj} user's data
-  */ 
   getCurrentUser(): any {
     return this.currentUser;
   }
 
- /**
-  * Check user credentials
-  * @param {obj} object with credentials
-  * @return {Observable} array of 1 user if search was successfull 
-  */ 
   checkUserInfo(userData): Observable<any> {
     const checkObservable = Observable.create( (observer: Observer<any>) => {
       const login = this.currentUser.login;
@@ -209,11 +179,6 @@ export class AuthService {
     )  
   }
 
-/**
- * Update user info for user with appropriate id
- * @param user's data
- * @return {Observable} updating result
- */
   updateUserInfo(userData): Observable<any> {
     const user = new User(userData.firstName, userData.lastName, 
                         this.currentUser.login, userData.passwords.password,
