@@ -4,10 +4,11 @@ import { Injectable } from '@angular/core';
 import * as AuthActions from './../store/auth.actions';
 import { map, mergeMap, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { User } from '../user.model';
 
 @Injectable()
 export class AuthEffects {
-   
+    constructor(private actions$: Actions, private authService: AuthService) {}
 
     @Effect()
     authSignIn = this.actions$
@@ -23,39 +24,42 @@ export class AuthEffects {
                 }
             ),
             mergeMap(
-                (authResponse: {authStatus: boolean, onlineMode: boolean}) => {
+                (authResponse: {authStatus: boolean, onlineMode: boolean, userData: any}) => {
+                    console.log(authResponse.userData);
                     if (authResponse.authStatus) {
                         return [
                             {
                                 type: AuthActions.SIGNIN
+                            },
+                            {
+                                type: AuthActions.SET_USER_DATA,
+                                payload: authResponse.userData
                             }
                         ]
+                    } else {
+                        return [];
                     }
                 }
             )
         );
 
-    // @Effect()
-    // authSignUp = this.actions$    
-    //     .pipe(
-    //         ofType(AuthActions.TRY_SIGNIN),
-    //         mergeMap(res=> {
-    //             return [
-    //                 {
-    //                     type: AuthActions.SIGNIN
-    //                 }
-    //             ]
-    //         })
-    //     );
-
-        constructor(private actions$: Actions,
-            private authService: AuthService) {}
-
-         
-
-        
-
-    
-    
+    @Effect()
+    authSignUp = this.actions$    
+        .pipe(
+            ofType(AuthActions.TRY_SIGNUP),
+            map((action: AuthActions.TrySignUp) => 
+                action.payload
+            ),
+            switchMap((userData: User) => {
+                return this.authService.signUp(userData);
+            }),
+            mergeMap((registrationStatus: Response)=> {
+                return [
+                    {
+                        type: AuthActions.SIGNUP
+                    }
+                ]
+            })
+        );
     
 }

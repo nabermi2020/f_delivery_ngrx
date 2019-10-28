@@ -37,18 +37,12 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.authResults  = authStatus;
   }
 
-/**
- * Provide user login using appropriate credentials
- * @param {NgForm} login and password.
- */
   onLogin(form: NgForm) {
     const { login, password } = form.value;
     const credentials = {
       login: login,
       password: password
     };
-   // console.log(credentials);
-    
    // this.authService.signIn(login, password);
     
     //this.store.dispatch(new authListActions.SignIn());

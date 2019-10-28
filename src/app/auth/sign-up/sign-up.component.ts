@@ -3,6 +3,9 @@ import { AuthService } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, Observer } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as fromAuth from './../store/auth.reducers';
+import * as authListActions from './../store/auth.actions';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,16 +18,14 @@ export class SignUpComponent implements OnInit {
   userRepeatedPassword: string;
   onlineMode: boolean;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private store: Store<fromAuth.State>) { }
 
   ngOnInit() {
     this.initForm();
     this.onlineMode = navigator.onLine;
   }
 
-/**
- * Initialize 'sign up' form's controls and appropriate validators
- */
   private initForm() {
     this.registrationForm = new FormGroup({
       "firstName": new FormControl('', [Validators.required, Validators.minLength(4)]),
@@ -47,11 +48,6 @@ export class SignUpComponent implements OnInit {
     return this.registrationForm;
   }
 
-/**
- * Check existence user with the same login
- * @param {FormControl} user's login
- * @return {Promise | Observable} returns checking results
- */
   checkDataUniquenessByField(control: FormControl): Observable<any> {      
     const onlineMode = navigator.onLine;
     const maxFieldLength = 4;
@@ -100,11 +96,6 @@ export class SignUpComponent implements OnInit {
     return searchedField; 
   }
   
- /**
-  * Compare two passwords which were entered by user in appropriate fields
-  * @param {FormGroup} users' passwords
-  * @return {null || Obj} returns checking results
-  */ 
   validatePasswords(registrationFormGroup: FormGroup) {
     const password = registrationFormGroup.controls.password.value;
     const repeatPassword = registrationFormGroup.controls.passwordRepeat.value;
@@ -121,10 +112,11 @@ export class SignUpComponent implements OnInit {
     return null;
 }
 
-/**
- * Create new user object and sign up it using 'authService'
- */
   onSignUp() {
+    this.store.select('auth')
+    .subscribe(res => {
+      console.log(res);
+    });
     this.onlineMode = navigator.onLine;
     const userInfo = this.registrationForm.value;
     const newUser = new User(userInfo.firstName, userInfo.lastName,
@@ -133,7 +125,7 @@ export class SignUpComponent implements OnInit {
                            userInfo.address);
     
     if (this.registrationForm.valid && this.onlineMode) {
-      this.authService.signUp(newUser);
+      this.store.dispatch(new authListActions.TrySignUp(newUser));
     } else if (!this.onlineMode && !this.registrationForm.valid) {
       this.registrationForm.patchValue({login: "", email: ""});
     }                  

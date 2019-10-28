@@ -16,7 +16,7 @@ export class AuthService {
   userData = new Subject<any>();
   currentUser: any;
   authResults: any;
-  
+
   constructor(private router: Router,
               private http: HttpClient,
               ) {}
@@ -27,13 +27,13 @@ export class AuthService {
       if (onlineMode) {
         this.aunthenticateUserOnline(login, password, authObserver);
       } else {
-        authObserver.next({ authStatus: false, onlineMode: false }); 
+        authObserver.next({ authStatus: false, onlineMode: false });
       }
     });
-    
+
     return authObserver;
-  }   
-  
+  }
+
   aunthenticateUserOnline(login: string, password: string, authObserver: Observer<any>) {
     const headers = new HttpHeaders({'Content-type': 'application/json'});
     this.http.get(`${this.apiUrl}/users?login=${login}&&password=${password}`, { headers })
@@ -44,9 +44,9 @@ export class AuthService {
         },
 
         (err: Response) => {
-          this.onAunthenticateUserOnlineFailure(err, authObserver); 
+          this.onAunthenticateUserOnlineFailure(err, authObserver);
         }
-      );  
+      );
   }
 
   onAunthenticateUserOnlineSuccess(authResults, authObserver: Observer<any>) {
@@ -54,15 +54,15 @@ export class AuthService {
       //console.log(authResults);
       localStorage.setItem('userInfo', JSON.stringify(authResults[0]));
       let authStatus = this.getAuthStatus(authResults) == true ? true : false;
-      authObserver.next({ authStatus: authStatus, onlineMode: onlineMode });
+      authObserver.next({ authStatus: authStatus, onlineMode: onlineMode, userData: authResults[0] });
   }
 
   onAunthenticateUserOnlineFailure(error, authObserver: Observer<any>) {
       let onlineMode = navigator.onLine;
       authObserver.error(error);
-      authObserver.next({ authStatus: false, onlineMode: onlineMode }); 
+      authObserver.next({ authStatus: false, onlineMode: onlineMode });
   }
-  
+
   signIn(login, password) {
     this.authenticateUser(login, password)
       .subscribe(
@@ -109,7 +109,7 @@ export class AuthService {
       this.router.navigate([`dashboard/products/${activeCategory}`]);
     }
   }
- 
+
   logOut() {
     this.authResults.authStatus = false;
     this.isUserAuthorized.next(this.authResults);
@@ -117,21 +117,23 @@ export class AuthService {
   }
 
   signUp(users) {
-    const headers = new HttpHeaders({'Content-type': 'application/json'});
-     
-    this.http.post(`${this.apiUrl}/users`, users, { headers })
-      .subscribe(
-        this.onSignUpSuccess.bind(this),
-        this.onSignUpFailure.bind(this)
-      );
-  }
+    return Observable.create( (observer: Observer<any>) => {
+      const headers = new HttpHeaders({'Content-type': 'application/json'});
+      
+      this.http.post(`${this.apiUrl}/users`, users, { headers })
+        .subscribe(
+          (authenticationStatus: Response) => {
+            observer.next(authenticationStatus);
+            this.router.navigate(['']);
+            observer.complete();
+          },
 
-  onSignUpSuccess(res) {
-    this.router.navigate(['']);  
-  }
-
-  onSignUpFailure(err) {
-    alert('Something went wrong, try again!!!');
+          (error: Response) => {
+            observer.next(error);
+            observer.complete();
+          }
+        );
+    });
   }
 
   checkFieldExistense(field: string, value: string): Observable<any> {
@@ -152,14 +154,14 @@ export class AuthService {
       const login = this.currentUser.login;
       const password = userData.passwords.password;
       let onlineMode = navigator.onLine;
-      
+
       if (onlineMode) {
         this.getUserInfo(login, password, observer);
       } else {
         observer.error("offline mode!");
       }
     });
-    
+
     return checkObservable;
   }
 
@@ -173,17 +175,17 @@ export class AuthService {
         }
       },
 
-      (checkErrors) => {  
+      (checkErrors) => {
         observer.error('User not found! ' + checkErrors);
       }
-    )  
+    )
   }
 
   updateUserInfo(userData): Observable<any> {
-    const user = new User(userData.firstName, userData.lastName, 
+    const user = new User(userData.firstName, userData.lastName,
                         this.currentUser.login, userData.passwords.password,
                         userData.phone, this.currentUser.email, userData.address);
-    
+
     const headers = new HttpHeaders({'Content-type': 'application/json'});
     return this.http.put(`${this.apiUrl}/users/${this.currentUser.id}`,  user, { headers });
   }
