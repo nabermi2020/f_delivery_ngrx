@@ -1,6 +1,8 @@
 import { AuthService } from './services/auth.service';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as fromApp from './../store/app.reducers';
 
 
 @Injectable()
@@ -9,18 +11,23 @@ export class AuthGuard implements CanActivate {
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
-                private authService: AuthService) {
-        // this.isAuthorized = this.authService.isAuthorized();
+                private authService: AuthService,
+                private store: Store<fromApp.AppState>) {
+        this.checkAuthenticationStatus();   
     }
 
-    /**
-     * Check user authentication status
-     * @param route snapshot
-     * @param router state
-     * @return return authentication status
-     */
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (this.authService.isAuthorized() && localStorage.getItem('userInfo')) {
+    private checkAuthenticationStatus(): void {
+        this.store.select('authModule')
+            .subscribe(
+                authData => {
+                    this.isAuthorized = authData.authStatus;
+            }
+        );
+    }
+
+    public canActivate(route: ActivatedRouteSnapshot,
+                state: RouterStateSnapshot): boolean {
+        if (this.isAuthorized && localStorage.getItem('userInfo')) {
             return true;
         } else {
             this.router.navigate([''], {relativeTo: this.route});

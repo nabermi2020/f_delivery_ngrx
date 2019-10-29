@@ -21,12 +21,7 @@ export class ProductService {
     products = {};
 
     constructor(private http: HttpClient,
-                private router: Router,
-                private loadingService: LoadingService,
-                private editModal: EditModalService,
-                private errorService: ErrorService) { 
-        
-    }
+                private errorService: ErrorService) {}
  
  /**
   * Save products on the server
@@ -53,6 +48,7 @@ export class ProductService {
                     observer.next(this.onProductGetSuccess(productList));
                     localStorage.setItem("productList", JSON.stringify({category: "pizza", products: productList}));
                 },
+                
                 (err: Response) => {
                     observer.error('error while getting products! ' + err);
                 }

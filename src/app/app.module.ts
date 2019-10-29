@@ -1,3 +1,4 @@
+import { StoreModule } from '@ngrx/store';
 import { ProductCart } from './shared/services/product-cart.service';
 import { ErrorService } from './shared/services/error.service';
 import { LoadingService } from './shared/services/loading.service';
@@ -11,6 +12,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { reducers } from './store/app.reducers';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,7 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     AuthModule,
     HttpClientModule,
-
+    StoreModule.forRoot(reducers)
   ],
   providers: [
     AuthGuard,

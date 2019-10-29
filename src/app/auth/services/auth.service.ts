@@ -111,9 +111,9 @@ export class AuthService {
   }
 
   logOut() {
-    this.authResults.authStatus = false;
-    this.isUserAuthorized.next(this.authResults);
-    localStorage.removeItem('userInfo');
+    //this.authResults.authStatus = false;
+    //this.isUserAuthorized.next(this.authResults);
+    //localStorage.removeItem('userInfo');
   }
 
   signUp(users) {

@@ -30,7 +30,7 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getProducts();
     this.checkSearchAvailability();
-    this.getProductByCategory();        
+    //this.getProductByCategory();        
   }
 
   private checkSearchAvailability() {

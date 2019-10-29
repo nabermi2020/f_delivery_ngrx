@@ -6,6 +6,7 @@ import { Observable, Observer } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromAuth from './../store/auth.reducers';
 import * as authListActions from './../store/auth.actions';
+import * as fromApp from './../../store/app.reducers';
 
 @Component({
   selector: 'app-sign-up',
@@ -16,17 +17,16 @@ export class SignUpComponent implements OnInit {
   registrationForm: FormGroup;
   userPassword: string;
   userRepeatedPassword: string;
-  onlineMode: boolean;
+  onlineMode: boolean = navigator.onLine;
 
   constructor(private authService: AuthService,
-              private store: Store<fromAuth.State>) { }
+              private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
     this.initForm();
-    this.onlineMode = navigator.onLine;
   }
 
-  private initForm() {
+  private initForm(): void {
     this.registrationForm = new FormGroup({
       "firstName": new FormControl('', [Validators.required, Validators.minLength(4)]),
       "lastName": new FormControl('', [Validators.required, Validators.minLength(4)]),
@@ -48,13 +48,12 @@ export class SignUpComponent implements OnInit {
     return this.registrationForm;
   }
 
-  checkDataUniquenessByField(control: FormControl): Observable<any> {      
+  private checkDataUniquenessByField(control: FormControl): Observable<{fieldIsForbidden: boolean, isNetworkEnabled: boolean}> {      
     const onlineMode = navigator.onLine;
     const maxFieldLength = 4;
 
     const forbiddenField = Observable.create( (forbiddenObserver: Observer<any>) => {
       const keyField = control.value;
-      console.log(this.registrationForm);
       const fieldName = this.searchKeyField(control, keyField);
 
       if (onlineMode && keyField.length >= maxFieldLength) {
@@ -83,7 +82,7 @@ export class SignUpComponent implements OnInit {
     return forbiddenField;
   }
 
-  searchKeyField(control: FormControl, keyField) {
+  private searchKeyField(control: FormControl, keyField): string {
     const field = control.value;
     let searchedField;
     let formFields = Object.entries(this.registrationForm.controls);
@@ -93,36 +92,41 @@ export class SignUpComponent implements OnInit {
         searchedField = key[0];
       }
     }
+
     return searchedField; 
   }
   
-  validatePasswords(registrationFormGroup: FormGroup) {
+  private validatePasswords(registrationFormGroup: FormGroup): null | {doesMatchPassword: boolean} {
     const password = registrationFormGroup.controls.password.value;
     const repeatPassword = registrationFormGroup.controls.passwordRepeat.value;
-
+    
     if (repeatPassword.length <= 0) {
-        return null;
+      return null;
     }
-
+    
     if (repeatPassword !== password) {
-        return {
-            doesMatchPassword: true
-        };
+      return {
+        doesMatchPassword: true
+      };
     }
-    return null;
-}
 
-  onSignUp() {
+    return null;
+  }
+
+  private onSignUp(): void {
     this.store.select('auth')
-    .subscribe(res => {
+      .subscribe(res => {
       console.log(res);
     });
+
     this.onlineMode = navigator.onLine;
     const userInfo = this.registrationForm.value;
-    const newUser = new User(userInfo.firstName, userInfo.lastName,
-                           userInfo.login, userInfo.passwords.password,
-                           userInfo.phone, userInfo.email,
-                           userInfo.address);
+    const newUser = new User(
+      userInfo.firstName, userInfo.lastName,
+      userInfo.login, userInfo.passwords.password,
+      userInfo.phone, userInfo.email,
+      userInfo.address
+    );
     
     if (this.registrationForm.valid && this.onlineMode) {
       this.store.dispatch(new authListActions.TrySignUp(newUser));

@@ -4,6 +4,9 @@ import { AuthService } from '../../auth/services/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import * as authListActions from './../../auth/store/auth.actions';
+import * as fromApp from './../../store/app.reducers';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +15,6 @@ import { Subscription } from 'rxjs';
   
 })
 export class HeaderComponent implements OnInit {
-  // activeCategory: string = "Pizza";
   activeUser: User;
   id: number;
   productsQuantity: any;  
@@ -22,16 +24,17 @@ export class HeaderComponent implements OnInit {
   checkProdutsSubscription = new Subscription();
 
   constructor(private authService: AuthService,
+              private store: Store<fromApp.AppState>,
               private router: Router,
               private productCartService: ProductCart) {             
     this.productsQuantity = this.productCartService.calculateProductsQuantity();
   }
 
   ngOnInit() {
-    this.activeUser = this.authService.getCurrentUser();
-    this.getUserData();    
-    this.id = this.activeUser.userId;
-    this.onProdAdded();
+    //this.activeUser = this.authService.getCurrentUser();
+    //this.getUserData();    
+    //this.id = this.activeUser.userId;
+    //this.onProdAdded();
   }
 
   getUserData() {
@@ -68,22 +71,15 @@ export class HeaderComponent implements OnInit {
   onProdAddedFailure(error) {
     alert('something went wrong!');
   }
-
-/**
- * Provide logout option and navigating to 'Auth screen'
- */  
+ 
   logOut() {
-    this.authService.logOut();
-    this.userDataSubscription.unsubscribe();
-    this.checkProdutsSubscription.unsubscribe();
-    this.router.navigate(['/']);
+    //this.authService.logOut();
+    //this.userDataSubscription.unsubscribe();
+    //this.checkProdutsSubscription.unsubscribe();
+    this.store.dispatch(new authListActions.LogOut());
+    this.store.dispatch(new authListActions.CleanUserData());
+    localStorage.removeItem('userInfo');
     // this.productCartService.onProductAdded.unsubscribe(); 
   }
 
- /**
-  * Navigate tp 'cart' component
-  */ 
-  openCart() {
-    this.router.navigate(['dashboard/cart']);
-  }
 }

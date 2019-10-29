@@ -1,50 +1,39 @@
-import { AuthService } from '../services/auth.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import * as fromApp from "./../../store/app.reducers";
+import * as authListActions from "./../store/auth.actions";
 
 @Component({
-  selector: 'app-authentication',
-  templateUrl: './authentication.component.html',
-  styleUrls: ['./authentication.component.scss']
+  selector: "app-authentication",
+  templateUrl: "./authentication.component.html",
+  styleUrls: ["./authentication.component.scss"]
 })
-export class AuthenticationComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject();
-
-  constructor(private authService: AuthService,
-              private router: Router) { }
+export class AuthenticationComponent implements OnInit {
+  constructor(private router: Router, private store: Store<fromApp.AppState>) {}
 
   ngOnInit() {
-    //this.checkAuthenticationStatus();  
+    this.checkAuthenticationStatus();
   }
 
-  checkAuthenticationStatus() {
-    // this.authService.isUserAuthorized
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe(
-    //     authStatus => {
-    //       if (authStatus.authStatus && authStatus.onlineMode) {
-    //         this.router.navigate(['/dashboard/products/pizza']);
-    //       } else { 
-    //         this.router.navigate(['']);
-    //       }
-    //     }
-    //   );
+  private checkAuthenticationStatus(): void {
+    this.store.select("authModule").subscribe(authData => {
+      console.log(authData);
+      if (authData.authStatus && navigator.onLine) {
+        this.router.navigate(["/dashboard/products/pizza"]);
+      } else {
+        this.router.navigate([""]);
+      }
+    });
 
-    //this.isAuthenticated();
+    this.isAuthenticated();
   }
 
-  isAuthenticated() {
-    // const userData = localStorage.getItem("userInfo");
-    // if (navigator.onLine && userData) {
-    //   const { login, password } = JSON.parse(userData);
-    //   this.authService.signIn(login, password);
-    // }    
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+  private isAuthenticated(): void {
+    const userData = localStorage.getItem("userInfo");
+    if (navigator.onLine && userData) {
+      const { login, password } = JSON.parse(userData);
+      this.store.dispatch(new authListActions.TrySignIn({ login, password }));
+    }
   }
 }
