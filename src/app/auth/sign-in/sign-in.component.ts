@@ -1,9 +1,11 @@
+import { LoadingService } from './../../shared/services/loading.service';
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { Store } from "@ngrx/store";
 import * as authListActions from "./../store/auth.actions";
 import * as fromApp from "./../../store/app.reducers";
+import { EditModalService } from 'src/app/shared/services/edit-modal.service';
 
 @Component({
   selector: "app-sign-in",
@@ -17,7 +19,9 @@ export class SignInComponent implements OnInit, OnDestroy {
     onlineMode: navigator.onLine
   };
 
-  constructor(private store: Store<fromApp.AppState>) {}
+  constructor(private store: Store<fromApp.AppState>,
+              private loadingService: LoadingService,
+              private editModal: EditModalService) {}
 
   ngOnInit() {}
 
@@ -26,6 +30,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       new authListActions.TrySignIn({ login: login, password: password })
     );
+
     this.checkAuthenticationStatus();
   }
 

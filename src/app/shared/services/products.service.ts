@@ -23,20 +23,14 @@ export class ProductService {
     constructor(private http: HttpClient,
                 private errorService: ErrorService) {}
  
- /**
-  * Save products on the server
-  */   
-    saveProducts() {
+ 
+    public saveProducts(): void {
         const headers = new HttpHeaders({'Content-type': 'application/json'});
         this.http.post(this.apiUrl, this.products, { headers})
             .subscribe();
     }
-
-/**
- * Get all products from server
- * @return {Observable} return all products
- */    
-    getProducts() {
+    
+    public getProducts(): Observable<Product[]> {
         const headers = new HttpHeaders({'Content-type': 'application/json'});
         const productsObservable = Observable.create( (observer: Observer<any>) => {
         let onlineMode = navigator.onLine;
@@ -47,14 +41,17 @@ export class ProductService {
                 (productList: Array<any>) => {
                     observer.next(this.onProductGetSuccess(productList));
                     localStorage.setItem("productList", JSON.stringify({category: "pizza", products: productList}));
+                    observer.complete();
                 },
                 
                 (err: Response) => {
                     observer.error('error while getting products! ' + err);
+                    observer.complete();
                 }
             ); 
         } else {
             observer.error("Offline mode!");
+            observer.complete();
         }
         });
         return productsObservable;

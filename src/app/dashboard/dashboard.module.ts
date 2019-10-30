@@ -1,3 +1,5 @@
+import { ProductsEffects } from './store/products.effects';
+import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from './../shared/shared.module';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -8,6 +10,8 @@ import { ProductGridComponent } from './product-grid/product-grid.component';
 import { ProductItemComponent } from './product-item/product-item.component';
 import { FiltersComponent } from './filters/filters.component';
 import { FilterProductsPipe } from './filter-products.pipe';
+import { StoreModule } from '@ngrx/store';
+import { productReducer } from './store/products.reducers';
 
 @NgModule({
     declarations: [
@@ -21,7 +25,10 @@ import { FilterProductsPipe } from './filter-products.pipe';
         CommonModule,
         DashboardRoutingModule,
         SharedModule,
-        FormsModule
+        FormsModule,
+        EffectsModule.forFeature([ProductsEffects])
+        
+        
     ],
     exports: []
 })
