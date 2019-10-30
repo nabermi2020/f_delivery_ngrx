@@ -21,6 +21,8 @@ export function productReducer(state = initialState, action: ProductsActions.Pro
         products: action.payload
       }
 
+      
+
     default:
       return {
         ...state

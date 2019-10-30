@@ -8,6 +8,7 @@ import { Subscription, Observable } from 'rxjs';
 import  * as fromApp from './../../store/app.reducers';
 import * as productListActions from './../store/products.actions';
 import { Product } from 'src/app/shared/product.model';
+import { mergeMap, switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-grid',
@@ -23,10 +24,8 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   onlineMode: boolean = true;
   searchAvailability: boolean = true;
   urlParSubscription = new Subscription();
-  productsByCategorySubscription = new Subscription();
   
-  constructor(private productsService: ProductService,
-              private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private loadingService: LoadingService,
               private editModal: EditModalService,
               private store: Store<fromApp.AppState>) { }
@@ -34,13 +33,11 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscribeToProductList();
     this.getProducts();
-    //this.checkSearchAvailability();
-    //this.getProductByCategory();
+    this.getProductByCategory();
   }
 
   ngOnDestroy() {
     this.urlParSubscription.unsubscribe();
-    this.productsByCategorySubscription.unsubscribe();
   }
 
   private getProducts(): void {
@@ -55,37 +52,18 @@ export class ProductGridComponent implements OnInit, OnDestroy {
       );
   }
 
-  private checkSearchAvailability() {
-    let localProductList = localStorage.getItem('productList');
-    if (localProductList) {
-      this.searchAvailability = JSON.parse(localStorage.getItem('productList')).products.length > 0;
-    }
-  }
-
-  getProductByCategory() {
+  private getProductByCategory(): void {
     this.urlParSubscription = this.route.firstChild.params
       .subscribe( 
-        (par: Params) => {
-          this.activeCategory = par["cat"];
+        (activeCategory: Params) => {
+          this.activeCategory = activeCategory["cat"];
           this.isSearchFailure = true;
-          //this.getProductByActiveCategory();
+          this.getProductByActiveCategory();
       });
   }
 
-  getProductByActiveCategory() {
-    this.productsByCategorySubscription = this.productsService.getProductsByCategory(this.activeCategory)
-      .subscribe(
-        this.onGetProductByActiveCategorySuccess.bind(this),    
-        this.onGetProductError.bind(this)
-       );  
-  }
-
-  onGetProductByActiveCategorySuccess(productList) {
-      this.onlineMode = productList.length > 0 ? true : false;
-      this.products = productList;
-      this.activeFilter = "All";
-      this.loadingService.toggleLoading();
-      this.editModal.toggleEditMode();
+  private getProductByActiveCategory(): void {
+    this.store.dispatch(new productListActions.GetProductListByCategory(this.activeCategory));
   }
 
   private onGetProductsSuccess(products): void {
@@ -103,11 +81,11 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   }
 
 
-  private setFilterCategory(productCategory): void {
+  public setFilterCategory(productCategory): void {
     this.activeFilter = productCategory;
   }
 
-  setProducts(products) {
+  public setProducts(products): void {
     if (products.length > 0 && products != 'All') {
       this.products = products;
       this.isSearchFailure = true;

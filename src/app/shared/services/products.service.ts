@@ -57,7 +57,7 @@ export class ProductService {
         return productsObservable;
     }
 
-    onProductGetSuccess(productList: Array<any>) { 
+    private onProductGetSuccess(productList: Array<any>): Array<Product> { 
         let products;
 
         if (productList.length > 0) {
@@ -87,12 +87,15 @@ export class ProductService {
                             observer.next(products);
                             localStorage.setItem("productList", JSON.stringify({category: category, products: products}));
                         } else {
-                            observer.error('No Products!');
+                            observer.error('No Products!');  
                         }
+
+                        observer.complete();
                     },
                 
                     (err: Response) => {
                         observer.error(err);
+                        observer.complete();
                     }
                 );
         } else {
@@ -102,6 +105,8 @@ export class ProductService {
             } else {
                 observer.error('Offline mode!');
             }
+            
+            observer.complete();
         }
      
         });
