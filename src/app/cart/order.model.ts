@@ -31,11 +31,11 @@ export class Order {
         this.products = cart.getCart();
     }
 
-    setUserId(id) {
+    public setUserId(id): void {
         this.userId = id;   
     }
 
-    generateOrderId(upperLimit: number, lowerLimit: number) {
+    private generateOrderId(upperLimit: number, lowerLimit: number): number {
         return Math.floor(Math.random() * (upperLimit - lowerLimit) + lowerLimit);
     }
 }

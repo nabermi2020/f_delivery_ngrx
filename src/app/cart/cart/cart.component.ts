@@ -21,55 +21,41 @@ export class CartComponent implements OnInit {
     this.getCartInfo();
   }
 
-  getCartInfo() {
+  private getCartInfo(): void {
     if (!navigator.onLine) {
       this.cart = this.productCart.getProducts();
       this.totalPrice = this.productCart.getTotalPrice();
     } else {
       this.cart = this.productCart.getCartFromLocalStorage();
-      console.log(this.cart);
       this.totalPrice = this.productCart.getTotalPrice();
     }
   }
 
- /**
-  * 
-  * @param {Product} selected product 
-  */ 
-  deleteCurrentProduct(product: Product) {
+  public deleteCurrentProduct(product: Product): void {
     const productId = product.id;
     this.productCart.deleteProductById(productId);
     this.totalPrice = this.productCart.getTotalPrice();
   }
 
-/**
- * Navigating to 'dashboard' after order is made
- */  
-  makeAnOrder() {
+
+  public makeAnOrder():void {
     this.router.navigate(['/dashboard/order-confirmation']);
   }
 
-/**
- * Add one product to cart, calling the bill for that service
- * @param {Product} product data
- */  
-  addOneProduct(product: Product) {
+ 
+  public addOneProduct(product: Product): void {
     const productId = product.id;
     this.productCart.addOneProductToCart(productId);
     this.totalPrice = this.productCart.getTotalPrice();
   }
-
- /**
-  * Delete one product from cart, calling the bill for that service
-  * @param {Product} product data
-  */   
-  deleteOneProduct(product: Product) {
+ 
+  public deleteOneProduct(product: Product): void {
     const productId = product.id;
     this.productCart.deleteOneProductFromCart(productId);
     this.totalPrice = this.productCart.getTotalPrice();
   }
 
-  navigateToProductDetailsPage(product) {
+  public navigateToProductDetailsPage(product): void {
     this.productService.setSelectedProduct(product);
     this.router.navigate([`dashboard/product-details/${product.id}`]);
   }

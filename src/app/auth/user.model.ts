@@ -23,7 +23,7 @@ export class User {
         this.userId = this.randomId(1000, 1);
     }
 
-    randomId(upperLimit: number, lowerLimit: number) {
+    private randomId(upperLimit: number, lowerLimit: number) {
         return Math.floor(Math.random() * (upperLimit - lowerLimit) + lowerLimit);
     }
 }

@@ -13,24 +13,24 @@ export class Cart {
         this.totalPrice = 0;
     }
 
-    setUserId(userData) {
+    public setUserId(userData): void {
         this.id = userData.id;
         this.userId = userData.userId;
     }
 
-    setCartId(id) {
+    public setCartId(id): void {
         this.cartId = id;
     }
 
-    getCart(): Array<Product> {
+    public getCart(): Array<Product> {
         return this.products;
     }
 
-    setProducts(products) {
+    public setProducts(products): void {
         this.products = products;
     }
 
-    addProduct(product: Product) {
+    public addProduct(product: Product): void {
         const productId = product.id;
        
         if (!this.checkForDublicates(productId)) {
@@ -47,7 +47,7 @@ export class Cart {
         this.calculateTotalPrice();    
     }
 
-    deleteProductById(id) {
+    public deleteProductById(id): void {
         let deleteWithId;
         this.products.forEach( (item, index) => {
             if ( item.id == id ) {
@@ -58,7 +58,7 @@ export class Cart {
         this.products.splice(deleteWithId, 1);
     }
 
-    addOneProductToCart(id) {
+    public addOneProductToCart(id): void {
         this.products.forEach( product => {
             if (product.id == id) {
                 ++product.productQuantity;
@@ -66,7 +66,7 @@ export class Cart {
         });  
     }
 
-    deleteOneProductFromCart(id) {
+    public deleteOneProductFromCart(id): void {
         this.products.forEach( product => {
             if (product.id == id && product.productQuantity != 1) {
                 --product.productQuantity;
@@ -74,7 +74,7 @@ export class Cart {
         });
     }
 
-    checkForDublicates(id): boolean {
+    private checkForDublicates(id): boolean {
         let isDublicated = false;
         this.products.forEach( item => {
             if (item.id == id) {
@@ -85,7 +85,7 @@ export class Cart {
         return isDublicated;
     }
 
-    calculateTotalPrice() {
+    private calculateTotalPrice(): void {
         let price = 0;
         this.products.forEach( item => {
             price += item.productPrice * item.productQuantity;
@@ -94,12 +94,12 @@ export class Cart {
         this.totalPrice = price;
     }
 
-    getTotalPrice() {
+    public getTotalPrice(): number {
         this.calculateTotalPrice();
         return this.totalPrice;
     }  
 
-    calculateProductsQuantity(): number {
+    public calculateProductsQuantity(): number {
         let productQuantity = 0;
 
         this.products.forEach( item => {
@@ -109,11 +109,11 @@ export class Cart {
         return productQuantity;
     }
 
-    cleanCart() {
+    public cleanCart(): void {
         this.products = [];
     }
 
-    randomId(upperLimit: number, lowerLimit: number) {
+    private randomId(upperLimit: number, lowerLimit: number): number {
         return Math.floor(Math.random() * (upperLimit - lowerLimit) + lowerLimit);
     }
 }

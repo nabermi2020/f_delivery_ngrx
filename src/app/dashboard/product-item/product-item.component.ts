@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
   selector: 'app-product-item',
   templateUrl: './product-item.component.html',
   styleUrls: ['./product-item.component.scss'],
-  //changeDetection: 
 })
 export class ProductItemComponent implements OnInit {
   @Input() productData: Product;

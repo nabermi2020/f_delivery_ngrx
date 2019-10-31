@@ -10,8 +10,6 @@ import { ProductGridComponent } from './product-grid/product-grid.component';
 import { ProductItemComponent } from './product-item/product-item.component';
 import { FiltersComponent } from './filters/filters.component';
 import { FilterProductsPipe } from './filter-products.pipe';
-import { StoreModule } from '@ngrx/store';
-import { productReducer } from './store/products.reducers';
 
 @NgModule({
     declarations: [
@@ -27,8 +25,6 @@ import { productReducer } from './store/products.reducers';
         SharedModule,
         FormsModule,
         EffectsModule.forFeature([ProductsEffects])
-        
-        
     ],
     exports: []
 })

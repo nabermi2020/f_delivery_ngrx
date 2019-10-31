@@ -4,7 +4,6 @@ import { Injectable } from "@angular/core";
 import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { Product } from "../product.model";
 import { Subject, Subscription, Observable } from "rxjs";
-import { Order } from "src/app/cart/order.model";
 import { environment } from "src/environments/environment";
 import { ErrorService } from "./error.service";
 

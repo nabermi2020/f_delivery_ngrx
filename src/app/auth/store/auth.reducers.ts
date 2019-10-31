@@ -14,7 +14,10 @@ const initialState = {
   userData: []
 };
 
-export function authReducers(state = initialState, action: AuthActions.AuthActions) {
+export function authReducers(
+  state = initialState,
+  action: AuthActions.AuthActions
+) {
   switch (action.type) {
     case AuthActions.SIGNIN:
       return {

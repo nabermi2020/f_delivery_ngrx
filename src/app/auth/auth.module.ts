@@ -7,7 +7,6 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationComponent } from './authentication/authentication.component';
-import { SharedModule } from '../shared/shared.module';
 import { authReducers } from './store/auth.reducers';
 import { EffectsModule } from '@ngrx/effects';
 
@@ -24,7 +23,6 @@ import { EffectsModule } from '@ngrx/effects';
         ReactiveFormsModule,
         StoreModule.forRoot({auth: authReducers}),
         EffectsModule.forRoot([AuthEffects])
-       // SharedModule
     ],
     exports: [
            

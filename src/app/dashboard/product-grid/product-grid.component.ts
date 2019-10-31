@@ -52,16 +52,12 @@ export class ProductGridComponent implements OnInit, OnDestroy {
         (activeCategory: Params) => {
           this.activeCategory = activeCategory["cat"];
           this.isSearchFailure = true;
-          this.getProductByActiveCategory();
+          this.store.dispatch(new productListActions.GetProductListByCategory(this.activeCategory));
       });
   }
 
-  private getProductByActiveCategory(): void {
-    this.store.dispatch(new productListActions.GetProductListByCategory(this.activeCategory));
-  }
-
   private onGetProductsSuccess(products): void {
-    console.log(products)
+    //console.log(products)
     this.products = products.products;
     this.onlineMode = true;
   }

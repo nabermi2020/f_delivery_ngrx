@@ -33,7 +33,7 @@ export class ProductsEffects {
   getProductListByCategory = this.actions$.pipe(
     ofType(ProductsActions.GET_PRODUCT_LIST_BY_CATEGORY),
     map((action: ProductsActions.GetProductListByCategory) => {
-      console.log(action.payload);
+      //console.log(action.payload);
       return action.payload;
     }),
     switchMap((activeProductCategory: string) => {

@@ -1,5 +1,5 @@
 
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Observable, Observer } from 'rxjs';
@@ -12,16 +12,14 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
   apiUrl: any = environment.apiUrl;
   isAuthenticated: boolean;
-  isUserAuthorized = new Subject<any>();
   userData = new Subject<any>();
   currentUser: any;
   authResults: any;
 
   constructor(private router: Router,
-              private http: HttpClient,
-              ) {}
+              private http: HttpClient) {}
 
-  authenticateUser(login: string, password: string) {
+  public authenticateUser(login: string, password: string): Observable<any> {
     const authObserver = Observable.create((authObserver: Observer<any>) => {
       let onlineMode = navigator.onLine;
       if (onlineMode) {
@@ -34,7 +32,7 @@ export class AuthService {
     return authObserver;
   }
 
-  aunthenticateUserOnline(login: string, password: string, authObserver: Observer<any>) {
+  private aunthenticateUserOnline(login: string, password: string, authObserver: Observer<any>): void {
     const headers = new HttpHeaders({'Content-type': 'application/json'});
     this.http.get(`${this.apiUrl}/users?login=${login}&&password=${password}`, { headers })
       .subscribe(
@@ -49,21 +47,20 @@ export class AuthService {
       );
   }
 
-  onAunthenticateUserOnlineSuccess(authResults, authObserver: Observer<any>) {
+  private onAunthenticateUserOnlineSuccess(authResults, authObserver: Observer<any>): void {
       let onlineMode = navigator.onLine;
-      //console.log(authResults);
       localStorage.setItem('userInfo', JSON.stringify(authResults[0]));
       let authStatus = this.getAuthStatus(authResults) == true ? true : false;
       authObserver.next({ authStatus: authStatus, onlineMode: onlineMode, userData: authResults[0] });
   }
 
-  onAunthenticateUserOnlineFailure(error, authObserver: Observer<any>) {
+  private onAunthenticateUserOnlineFailure(error, authObserver: Observer<any>): void {
       let onlineMode = navigator.onLine;
       authObserver.error(error);
       authObserver.next({ authStatus: false, onlineMode: onlineMode });
   }
 
-  signIn(login, password) {
+  public signIn(login, password): void {
     this.authenticateUser(login, password)
       .subscribe(
         this.onSignInSuccess.bind(this),
@@ -71,20 +68,16 @@ export class AuthService {
       );
   }
 
-  onSignInSuccess(authStatus) {
+  private onSignInSuccess(authStatus): void {
     this.authResults = authStatus;
-    console.log(authStatus);
     this.router.navigate(['dashboard/products/pizza']);
-    //this.isUserAuthorized.next(this.authResults);
   }
 
-  onSignInFailure(authErr) {
+  private  onSignInFailure(authErr): void {
     this.authResults = authErr;
-    console.log(authErr.status)
-    console.log(this.authResults);
   }
 
-  getAuthStatus(userData) {
+  private getAuthStatus(userData): boolean {
     let authStatus;
     if (userData && userData.length > 0 ) {
       this.currentUser = userData[0];
@@ -93,14 +86,14 @@ export class AuthService {
       this.userData.next(userData[0]);
       return true;
     } else {
-      console.log('Authentication error!');
+      //console.log('Authentication error!');
       authStatus = false;
     }
 
     return authStatus;
   }
 
-  updateUserData() {
+  private updateUserData(): void {
     let onlineMode = navigator.onLine;
     if (onlineMode) {
       this.signIn(this.currentUser.login, this.currentUser.password);
@@ -110,13 +103,7 @@ export class AuthService {
     }
   }
 
-  logOut() {
-    //this.authResults.authStatus = false;
-    //this.isUserAuthorized.next(this.authResults);
-    //localStorage.removeItem('userInfo');
-  }
-
-  signUp(users) {
+  public signUp(users): Observable<Response> {
     return Observable.create( (observer: Observer<any>) => {
       const headers = new HttpHeaders({'Content-type': 'application/json'});
       
@@ -136,20 +123,20 @@ export class AuthService {
     });
   }
 
-  checkFieldExistense(field: string, value: string): Observable<any> {
+  public checkFieldExistense(field: string, value: string): Observable<any> {
     const headers = new HttpHeaders({'Content-type': 'application/json'});
     return this.http.get(`${this.apiUrl}/users?${field}=${value}`, { headers });
   }
 
-  isAuthorized(): boolean {
+  public isAuthorized(): boolean {
     return this.isAuthenticated;
   }
 
-  getCurrentUser(): any {
+  public getCurrentUser(): any {
     return this.currentUser;
   }
 
-  checkUserInfo(userData): Observable<any> {
+  public checkUserInfo(userData): Observable<any> {
     const checkObservable = Observable.create( (observer: Observer<any>) => {
       const login = this.currentUser.login;
       const password = userData.passwords.password;
@@ -165,7 +152,7 @@ export class AuthService {
     return checkObservable;
   }
 
-  getUserInfo(login, password, observer) {
+  private getUserInfo(login, password, observer): void {
     const headers = new HttpHeaders({'Content-type': 'application/json'});
     this.http.get(`${this.apiUrl}/users?login=${login}&&password=${password}`, { headers })
     .subscribe(
@@ -181,7 +168,7 @@ export class AuthService {
     )
   }
 
-  updateUserInfo(userData): Observable<any> {
+  public updateUserInfo(userData): Observable<any> {
     const user = new User(userData.firstName, userData.lastName,
                         this.currentUser.login, userData.passwords.password,
                         userData.phone, this.currentUser.email, userData.address);

@@ -12,11 +12,9 @@ export class ProductService {
 
     constructor(private http: HttpClient) {}
  
- 
     public saveProducts(): void {
         const headers = new HttpHeaders({'Content-type': 'application/json'});
-        this.http.post(this.apiUrl, this.products, { headers})
-            .subscribe();
+        this.http.post(this.apiUrl, this.products, { headers}).subscribe();
     }
     
     public getProducts(): Observable<Product[]> {
