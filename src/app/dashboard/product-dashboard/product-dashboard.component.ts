@@ -22,7 +22,7 @@ export class ProductDashboardComponent implements OnInit, OnDestroy {
     this.cartService.getCartFromServer();
   }
 
-  subscribeToModalToggling() {
+  public subscribeToModalToggling(): void {
     this.editMode = this.editModal.onEditChange.subscribe(
       (res: boolean) => {
         this.isModalEnabled = res;

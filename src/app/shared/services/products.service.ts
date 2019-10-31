@@ -1,27 +1,16 @@
-import { ErrorService } from './error.service';
-import { LoadingService } from './loading.service';
-import { AppNotFoundErr } from './../app-not-found-err';
 import { Product } from '../product.model';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpHeaderResponse } from '@angular/common/http';
-import { Observable, Subscription, Subject, combineLatest, Observer } from 'rxjs';
-import { mapTo, catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, Observer } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { merge } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { EditModalService } from './edit-modal.service';
-import { throwError } from 'rxjs';
-
 
 @Injectable()
 export class ProductService {
     apiUrl: string = environment.apiUrl;
-    selectedProduct;
-    results = [];
+    selectedProduct: Product;
     products = {};
 
-    constructor(private http: HttpClient,
-                private errorService: ErrorService) {}
+    constructor(private http: HttpClient) {}
  
  
     public saveProducts(): void {
@@ -67,13 +56,8 @@ export class ProductService {
 
         return products;   
     }
-
-/**
- * Get products according to selected category
- * @param {String} product's category
- * @return {Observable} products which are matched search query
- */    
-    getProductsByCategory(category: string): Observable<any> {
+   
+    public getProductsByCategory(category: string): Observable<any> {
       
         const productsObserver = Observable.create((observer: Observer<any>) => {
         const headers = new HttpHeaders({'Content-type': 'application/json'});
@@ -114,16 +98,12 @@ export class ProductService {
         return productsObserver;
     }
 
-    setSelectedProduct(productInfo) {
+    public setSelectedProduct(productInfo): void {
         this.selectedProduct = productInfo;
     }
 
-    getSelectedProduct() {
+    public getSelectedProduct(): Product {
         return this.selectedProduct;
     }
-
-    getResults() {
-        return this.results;
-    }
-    
+   
 }

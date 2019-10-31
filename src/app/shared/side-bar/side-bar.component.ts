@@ -1,4 +1,3 @@
-import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,12 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SideBarComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      
-    });
-  }
+  ngOnInit() {}
 
 }

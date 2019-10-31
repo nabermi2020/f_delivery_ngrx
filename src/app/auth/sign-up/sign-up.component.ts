@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, Observer } from 'rxjs';
 import { Store } from '@ngrx/store';
-import * as fromAuth from './../store/auth.reducers';
 import * as authListActions from './../store/auth.actions';
 import * as fromApp from './../../store/app.reducers';
 

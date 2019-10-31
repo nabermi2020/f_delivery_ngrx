@@ -19,13 +19,11 @@ export class SignInComponent implements OnInit, OnDestroy {
     onlineMode: navigator.onLine
   };
 
-  constructor(private store: Store<fromApp.AppState>,
-              private loadingService: LoadingService,
-              private editModal: EditModalService) {}
+  constructor(private store: Store<fromApp.AppState>) {}
 
   ngOnInit() {}
 
-  private onLogin(form: NgForm): void {
+  public onLogin(form: NgForm): void {
     const { login, password } = form.value;
     this.store.dispatch(
       new authListActions.TrySignIn({ login: login, password: password })

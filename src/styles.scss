@@ -1,17 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
-body, html {
-    background: rgb(51, 49, 49);
-    height: 100%;
-    width: 100%;
+body,
+html {
+  background: rgb(51, 49, 49);
+  height: 100%;
+  width: 100%;
 }
 
-
 .validationErrors {
-    color: red;
-    font-weight: 600;
+  color: red;
+  font-weight: 600;
 }
 
 @font-face {
-    font-family: 'Mansalva';
-    src: url('../src/assets/fonts/Mansalva-Regular.ttf');
- }
+  font-family: "Mansalva";
+  src: url("../src/assets/fonts/Mansalva-Regular.ttf");
+}
