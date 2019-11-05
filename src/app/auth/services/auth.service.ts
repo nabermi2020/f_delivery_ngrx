@@ -1,4 +1,3 @@
-
 import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -73,7 +72,7 @@ export class AuthService {
     this.router.navigate(['dashboard/products/pizza']);
   }
 
-  private  onSignInFailure(authErr): void {
+  private onSignInFailure(authErr): void {
     this.authResults = authErr;
   }
 
@@ -86,7 +85,6 @@ export class AuthService {
       this.userData.next(userData[0]);
       return true;
     } else {
-      //console.log('Authentication error!');
       authStatus = false;
     }
 
@@ -169,9 +167,10 @@ export class AuthService {
   }
 
   public updateUserInfo(userData): Observable<any> {
+   
     const user = new User(userData.firstName, userData.lastName,
-                        this.currentUser.login, userData.passwords.password,
-                        userData.phone, this.currentUser.email, userData.address);
+      this.currentUser.login, userData.passwords.password,
+      userData.phone, this.currentUser.email, userData.address);
 
     const headers = new HttpHeaders({'Content-type': 'application/json'});
     return this.http.put(`${this.apiUrl}/users/${this.currentUser.id}`,  user, { headers });

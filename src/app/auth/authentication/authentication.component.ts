@@ -1,3 +1,4 @@
+import { AuthFacade } from './../store/auth.facade';
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
@@ -10,15 +11,17 @@ import * as authListActions from "./../store/auth.actions";
   styleUrls: ["./authentication.component.scss"]
 })
 export class AuthenticationComponent implements OnInit {
-  constructor(private router: Router, private store: Store<fromApp.AppState>) {}
+  constructor(private router: Router,
+              private store: Store<fromApp.AppState>,
+              private authFacade: AuthFacade) {}
 
   ngOnInit() {
     this.checkAuthenticationStatus();
   }
 
   private checkAuthenticationStatus(): void {
+    
     this.store.select("authModule").subscribe(authData => {
-      console.log(authData);
       if (authData.authStatus && navigator.onLine) {
         this.router.navigate(["/dashboard/products/pizza"]);
       } else {
@@ -33,6 +36,7 @@ export class AuthenticationComponent implements OnInit {
     const userData = localStorage.getItem("userInfo");
     if (navigator.onLine && userData) {
       const { login, password } = JSON.parse(userData);
+      //this.authFacade.trySignIn({ login, password }); // move to facade
       this.store.dispatch(new authListActions.TrySignIn({ login, password }));
     }
   }

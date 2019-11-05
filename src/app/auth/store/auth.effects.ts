@@ -13,7 +13,6 @@ export class AuthEffects {
   authSignIn = this.actions$.pipe(
     ofType(AuthActions.TRY_SIGNIN),
     map((action: AuthActions.TrySignIn) => {
-      //console.log(action.payload);
       return action.payload;
     }),
     switchMap((authData: { login: string; password: string }) => {
@@ -28,7 +27,6 @@ export class AuthEffects {
         onlineMode: boolean;
         userData: any;
       }) => {
-        //console.log(authResponse.userData);
         if (authResponse.authStatus) {
           return [
             {

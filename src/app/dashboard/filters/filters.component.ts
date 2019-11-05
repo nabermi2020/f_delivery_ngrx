@@ -24,7 +24,11 @@ export class FiltersComponent implements OnInit, OnDestroy {
     this.subscribeToActiveRoute();
   }
 
-  subscribeToActiveRoute() {
+  ngOnDestroy() {
+    this.activeFilterSubscription.unsubscribe();
+  }
+
+  private subscribeToActiveRoute(): void {
     this.activeFilterSubscription = this.activeRoute.children[0].params
     .subscribe(
       res => {
@@ -35,13 +39,8 @@ export class FiltersComponent implements OnInit, OnDestroy {
     );
   }
 
-  filterProductsByCategory(filter) {
+  public filterProductsByCategory(filter): void {
     this.activeCategory = filter;
     this.activeCategorySelected.emit(filter);
   }
-
-  ngOnDestroy() {
-    this.activeFilterSubscription.unsubscribe();
-  }
-
 }

@@ -23,6 +23,10 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
+  ngOnDestroy() {
+    this.authStatus.unsubscribe();
+  }
+
   public onLogin(form: NgForm): void {
     const { login, password } = form.value;
     this.store.dispatch(
@@ -43,9 +47,5 @@ export class SignInComponent implements OnInit, OnDestroy {
           this.authResults.authStatus = authenticationResult.authStatus;
         }
       );
-  }
-
-  ngOnDestroy() {
-    this.authStatus.unsubscribe();
   }
 }

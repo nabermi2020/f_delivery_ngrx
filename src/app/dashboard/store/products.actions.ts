@@ -1,9 +1,9 @@
 import { Action } from "@ngrx/store";
 import { Product } from "src/app/shared/product.model";
 
-export const GET_DEFAULT_PRODUCT_LIST = "GET_DEFAULT_PRODUCT_LIST";
-export const SAVE_PRODUCT_LIST = "SAVE_PRODUCT_LIST";
-export const GET_PRODUCT_LIST_BY_CATEGORY = "GET_PRODUCT_LIST_BY_CATEGORY";
+export const GET_DEFAULT_PRODUCT_LIST = "[PRODUCTS] GET_DEFAULT_PRODUCT_LIST";
+export const SAVE_PRODUCT_LIST = "[PRODUCTS] SAVE_PRODUCT_LIST";
+export const GET_PRODUCT_LIST_BY_CATEGORY = "[PRODUCTS] GET_PRODUCT_LIST_BY_CATEGORY";
 
 export class GetDefaultProductList implements Action {
   readonly type = GET_DEFAULT_PRODUCT_LIST;
