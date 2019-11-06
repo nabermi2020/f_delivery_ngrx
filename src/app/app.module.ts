@@ -1,3 +1,4 @@
+import { AuthHttpClientService } from './auth/services/auth-http-client.service';
 import { StoreModule } from '@ngrx/store';
 import { ProductCart } from './shared/services/product-cart.service';
 import { ErrorService } from './shared/services/error.service';
@@ -11,8 +12,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppComponent } from './app.component';
 import { reducers } from './store/app.reducers';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { reducers } from './store/app.reducers';
     AppRoutingModule,
     AuthModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
     AuthGuard,
@@ -33,7 +37,7 @@ import { reducers } from './store/app.reducers';
     ProductCart,
     LoadingService,
     ErrorService,
-   
+    AuthHttpClientService   
   ],
   bootstrap: [AppComponent]
 })

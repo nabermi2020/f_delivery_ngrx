@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subject, Observable, Observer } from 'rxjs';
 import { User } from '../user.model';
 import { environment } from 'src/environments/environment';
+import { AuthHttpClientService } from './auth-http-client.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AuthService {
   authResults: any;
 
   constructor(private router: Router,
-              private http: HttpClient) {}
+              private http: HttpClient,
+              private httpClient: AuthHttpClientService) {}
 
   public authenticateUser(login: string, password: string): Observable<any> {
     const authObserver = Observable.create((authObserver: Observer<any>) => {
@@ -33,7 +35,7 @@ export class AuthService {
 
   private aunthenticateUserOnline(login: string, password: string, authObserver: Observer<any>): void {
     const headers = new HttpHeaders({'Content-type': 'application/json'});
-    this.http.get(`${this.apiUrl}/users?login=${login}&&password=${password}`, { headers })
+    this.httpClient.get(`${this.apiUrl}/users?login=${login}&&password=${password}`)
       .subscribe(
         (authResults: Response) => {
           this.onAunthenticateUserOnlineSuccess(authResults, authObserver);
@@ -103,9 +105,7 @@ export class AuthService {
 
   public signUp(users): Observable<Response> {
     return Observable.create( (observer: Observer<any>) => {
-      const headers = new HttpHeaders({'Content-type': 'application/json'});
-      
-      this.http.post(`${this.apiUrl}/users`, users, { headers })
+      this.httpClient.post(`${this.apiUrl}/users`, users)
         .subscribe(
           (authenticationStatus: Response) => {
             observer.next(authenticationStatus);
@@ -122,8 +122,7 @@ export class AuthService {
   }
 
   public checkFieldExistense(field: string, value: string): Observable<any> {
-    const headers = new HttpHeaders({'Content-type': 'application/json'});
-    return this.http.get(`${this.apiUrl}/users?${field}=${value}`, { headers });
+    return this.httpClient.get(`${this.apiUrl}/users?${field}=${value}`);
   }
 
   public isAuthorized(): boolean {
@@ -151,8 +150,7 @@ export class AuthService {
   }
 
   private getUserInfo(login, password, observer): void {
-    const headers = new HttpHeaders({'Content-type': 'application/json'});
-    this.http.get(`${this.apiUrl}/users?login=${login}&&password=${password}`, { headers })
+    this.httpClient.get(`${this.apiUrl}/users?login=${login}&&password=${password}`)
     .subscribe(
       (checkResults: Array<any>) => {
         if (checkResults.length > 0) {
@@ -166,14 +164,12 @@ export class AuthService {
     )
   }
 
-  public updateUserInfo(userData): Observable<any> {
-   
+  public updateUserInfo(userData): Observable<any> {   
     const user = new User(userData.firstName, userData.lastName,
       this.currentUser.login, userData.passwords.password,
       userData.phone, this.currentUser.email, userData.address);
 
-    const headers = new HttpHeaders({'Content-type': 'application/json'});
-    return this.http.put(`${this.apiUrl}/users/${this.currentUser.id}`,  user, { headers });
+    return this.httpClient.put(`${this.apiUrl}/users/${this.currentUser.id}`,  user);
   }
 
 }
