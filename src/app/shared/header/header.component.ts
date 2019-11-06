@@ -1,12 +1,9 @@
+import { AuthFacade } from './../../auth/store/auth.facade';
 import { ProductCart } from '../services/product-cart.service';
 import { User } from '../../auth/user.model';
 import { AuthService } from '../../auth/services/auth.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import * as authListActions from './../../auth/store/auth.actions';
-import * as fromApp from './../../store/app.reducers';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-header',
@@ -24,20 +21,14 @@ export class HeaderComponent implements OnInit {
   checkProdutsSubscription = new Subscription();
 
   constructor(private authService: AuthService,
-              private store: Store<fromApp.AppState>,
-              private router: Router,
+              private authFacade: AuthFacade,
               private productCartService: ProductCart) {             
     this.productsQuantity = this.productCartService.calculateProductsQuantity();
   }
 
-  ngOnInit() {
-    //this.activeUser = this.authService.getCurrentUser();
-    //this.getUserData();    
-    //this.id = this.activeUser.userId;
-    //this.onProdAdded();
-  }
+  ngOnInit() {}
 
-  getUserData() {
+  public getUserData(): void {
     this.userDataSubscription = this.authService.userData
     .subscribe(
       this.onGetUserDataSuccess.bind(this),
@@ -45,17 +36,17 @@ export class HeaderComponent implements OnInit {
     ); 
   }
 
-  onGetUserDataSuccess(userData) {
+  private onGetUserDataSuccess(userData: User): void {
     this.activeUser =  this.authService.getCurrentUser();
     this.productsQuantity = this.productCartService.calculateProductsQuantity();
   }
 
-  onGetUserDataFailure(error) {
+  private onGetUserDataFailure(error): void {
     alert('Something went wrong!');
     console.log(error);
   }
 
-  onProdAdded() {
+  public onProdAdded(): void {
     this.checkProdutsSubscription = this.productCartService.onProductAdded  
       .subscribe( 
         this.onProdAddedSuccess.bind(this),
@@ -63,23 +54,18 @@ export class HeaderComponent implements OnInit {
       );
   }
     
-  onProdAddedSuccess(prodAddStatus) {
+  private onProdAddedSuccess(prodAddStatus): void {
     this.productsQuantity = this.productCartService.calculateProductsQuantity();
     this.totalPrice = this.productCartService.getTotalPrice(); 
   }
 
-  onProdAddedFailure(error) {
+  private onProdAddedFailure(error): void {
     alert('something went wrong!');
   }
  
-  logOut() {
-    //this.authService.logOut();
-    //this.userDataSubscription.unsubscribe();
-    //this.checkProdutsSubscription.unsubscribe();
-    this.store.dispatch(new authListActions.LogOut());
-    this.store.dispatch(new authListActions.CleanUserData());
-    localStorage.removeItem('userInfo');
-    // this.productCartService.onProductAdded.unsubscribe(); 
+  public logOut(): void {
+    this.authFacade.logOut();
+    localStorage.removeItem('userInfo'); 
   }
 
 }

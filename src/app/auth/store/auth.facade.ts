@@ -23,5 +23,10 @@ export class AuthFacade {
     public trySignUp(payload: User): void {
         this.store.dispatch(new authListActions.TrySignUp(payload));        
     }
+
+    public logOut(): void {
+        this.store.dispatch(new authListActions.LogOut());
+        this.store.dispatch(new authListActions.CleanUserData());
+    }
 }
  
