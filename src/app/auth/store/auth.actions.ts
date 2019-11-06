@@ -6,13 +6,13 @@ export interface Credentials {
   password: string;
 }
 
-export const SIGNIN = "SIGNIN";
-export const TRY_SIGNIN = "TRY_SIGNIN";
-export const SIGNUP = "SIGNUP";
-export const LOGOUT = "LOGOUT";
-export const TRY_SIGNUP = "TRY_SIGNUP";
-export const SET_USER_DATA = "SET_USER_DATA";
-export const CLEAN_USER_DATA = "CLEAN_USER_DATA";
+export const SIGNIN = "[AUTH] SIGNIN";
+export const TRY_SIGNIN = "[AUTH] TRY_SIGNIN";
+export const SIGNUP = "[AUTH] SIGNUP";
+export const LOGOUT = "[AUTH] LOGOUT";
+export const TRY_SIGNUP = "[AUTH] TRY_SIGNUP";
+export const SET_USER_DATA = "[AUTH] SET_USER_DATA";
+export const CLEAN_USER_DATA = "[AUTH] CLEAN_USER_DATA";
 
 export class SignIn implements Action {
   readonly type = SIGNIN;

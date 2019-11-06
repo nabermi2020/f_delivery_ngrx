@@ -1,9 +1,8 @@
-import { Store } from '@ngrx/store';
+import { ProductsFacade } from './../store/products.facade';
+import { ProductsSelectors } from './../store/products.selectors';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import  * as fromApp from './../../store/app.reducers';
-import * as productListActions from './../store/products.actions';
 import { Product } from 'src/app/shared/product.model';
 
 @Component({
@@ -22,7 +21,8 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   urlParSubscription = new Subscription();
   
   constructor(private route: ActivatedRoute,
-              private store: Store<fromApp.AppState>) { }
+              private productsSelectors: ProductsSelectors,
+              private productsFacade: ProductsFacade) { }
 
   ngOnInit() {
     this.subscribeToProductList();
@@ -35,11 +35,11 @@ export class ProductGridComponent implements OnInit, OnDestroy {
   }
 
   private getProducts(): void {
-    this.store.dispatch(new productListActions.GetDefaultProductList());
+    this.productsFacade.getProducts();
   }
 
   private subscribeToProductList(): void {
-    this.store.select('dashboardModule')
+    this.productsSelectors.dashboardModule$
       .subscribe( 
         this.onGetProductsSuccess.bind(this),       
         this.onGetProductError.bind(this)  
@@ -52,12 +52,11 @@ export class ProductGridComponent implements OnInit, OnDestroy {
         (activeCategory: Params) => {
           this.activeCategory = activeCategory["cat"];
           this.isSearchFailure = true;
-          this.store.dispatch(new productListActions.GetProductListByCategory(this.activeCategory));
+          this.productsFacade.getProductListByCategory(this.activeCategory);
       });
   }
 
   private onGetProductsSuccess(products): void {
-    //console.log(products)
     this.products = products.products;
     this.onlineMode = true;
   }

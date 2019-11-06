@@ -1,10 +1,10 @@
+import { AuthFacade } from './../store/auth.facade';
 import { User } from './../user.model';
 import { AuthService } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, Observer } from 'rxjs';
 import { Store } from '@ngrx/store';
-import * as authListActions from './../store/auth.actions';
 import * as fromApp from './../../store/app.reducers';
 
 @Component({
@@ -19,7 +19,8 @@ export class SignUpComponent implements OnInit {
   onlineMode: boolean = navigator.onLine;
 
   constructor(private authService: AuthService,
-              private store: Store<fromApp.AppState>) { }
+              private store: Store<fromApp.AppState>,
+              private authFacade: AuthFacade) { }
 
   ngOnInit() {
     this.initForm();
@@ -113,11 +114,6 @@ export class SignUpComponent implements OnInit {
   }
 
   private onSignUp(): void {
-    this.store.select('auth')
-      .subscribe(res => {
-      console.log(res);
-    });
-
     this.onlineMode = navigator.onLine;
     const userInfo = this.registrationForm.value;
     const newUser = new User(
@@ -128,7 +124,7 @@ export class SignUpComponent implements OnInit {
     );
     
     if (this.registrationForm.valid && this.onlineMode) {
-      this.store.dispatch(new authListActions.TrySignUp(newUser));
+      this.authFacade.trySignUp(newUser);
     } else if (!this.onlineMode && !this.registrationForm.valid) {
       this.registrationForm.patchValue({login: "", email: ""});
     }                  

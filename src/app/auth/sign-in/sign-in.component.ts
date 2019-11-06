@@ -1,3 +1,4 @@
+import { AuthFacade } from './../store/auth.facade';
 import { LoadingService } from './../../shared/services/loading.service';
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NgForm } from "@angular/forms";
@@ -19,7 +20,8 @@ export class SignInComponent implements OnInit, OnDestroy {
     onlineMode: navigator.onLine
   };
 
-  constructor(private store: Store<fromApp.AppState>) {}
+  constructor(private store: Store<fromApp.AppState>,
+              private authFacade: AuthFacade) {}
 
   ngOnInit() {}
 
@@ -29,10 +31,7 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   public onLogin(form: NgForm): void {
     const { login, password } = form.value;
-    this.store.dispatch(
-      new authListActions.TrySignIn({ login: login, password: password })
-    );
-
+    this.authFacade.trySignIn({login: login, password});
     this.checkAuthenticationStatus();
   }
 

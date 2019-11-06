@@ -1,3 +1,4 @@
+import { User } from './../user.model';
 import { Injectable } from '@angular/core';
 import { TrySignIn } from "./auth.actions";
 import * as fromApp from './../../store/app.reducers';
@@ -17,6 +18,10 @@ export class AuthFacade {
 
     public trySignIn(payload: Credentials): void {
         this.store.dispatch(new authListActions.TrySignIn(payload));
+    }
+
+    public trySignUp(payload: User): void {
+        this.store.dispatch(new authListActions.TrySignUp(payload));        
     }
 }
  
