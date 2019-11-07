@@ -1,3 +1,4 @@
+import { Credentials } from './auth.facade';
 import { AuthService } from "./../services/auth.service";
 import { Effect, Actions, ofType } from "@ngrx/effects";
 import { Injectable } from "@angular/core";
@@ -15,11 +16,8 @@ export class AuthEffects {
     map((action: AuthActions.TrySignIn) => {
       return action.payload;
     }),
-    switchMap((authData: { login: string; password: string }) => {
-      return this.authService.authenticateUser(
-        authData.login,
-        authData.password
-      );
+    switchMap((authData: Credentials) => {
+      return this.authService.authenticateUser(authData);
     }),
     mergeMap(
       (authResponse: {

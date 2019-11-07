@@ -116,13 +116,9 @@ export class SignUpComponent implements OnInit {
   private onSignUp(): void {
     this.onlineMode = navigator.onLine;
     const userInfo = this.registrationForm.value;
-    const newUser = new User(
-      userInfo.firstName, userInfo.lastName,
-      userInfo.login, userInfo.passwords.password,
-      userInfo.phone, userInfo.email,
-      userInfo.address
-    );
-    
+    userInfo.password = userInfo.passwords.password;
+    delete userInfo.passwords;
+    const newUser = new User(userInfo);
     if (this.registrationForm.valid && this.onlineMode) {
       this.authFacade.trySignUp(newUser);
     } else if (!this.onlineMode && !this.registrationForm.valid) {

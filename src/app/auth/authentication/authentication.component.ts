@@ -1,5 +1,5 @@
 import { AuthSelectors } from './../store/auth.selectors';
-import { AuthFacade } from './../store/auth.facade';
+import { AuthFacade, Credentials } from './../store/auth.facade';
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
@@ -35,8 +35,8 @@ export class AuthenticationComponent implements OnInit {
   private isAuthenticated(): void {
     const userData = localStorage.getItem("userInfo");
     if (navigator.onLine && userData) {
-      const { login, password } = JSON.parse(userData);
-      this.authFacade.trySignIn({ login, password });
+      const credentials: Credentials = JSON.parse(userData);
+      this.authFacade.trySignIn(credentials);
     }
   }
 }

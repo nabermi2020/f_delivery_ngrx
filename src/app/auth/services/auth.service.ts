@@ -1,4 +1,6 @@
-import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
+import { Credentials } from './../store/auth.facade';
+import { UserData } from './../auth.interfaces';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Observable, Observer } from 'rxjs';
@@ -17,14 +19,13 @@ export class AuthService {
   authResults: any;
 
   constructor(private router: Router,
-              private http: HttpClient,
               private httpClient: AuthHttpClientService) {}
 
-  public authenticateUser(login: string, password: string): Observable<any> {
+  public authenticateUser(credentials: Credentials): Observable<any> {
     const authObserver = Observable.create((authObserver: Observer<any>) => {
       let onlineMode = navigator.onLine;
       if (onlineMode) {
-        this.aunthenticateUserOnline(login, password, authObserver);
+        this.aunthenticateUserOnline(credentials, authObserver);
       } else {
         authObserver.next({ authStatus: false, onlineMode: false });
       }
@@ -33,9 +34,9 @@ export class AuthService {
     return authObserver;
   }
 
-  private aunthenticateUserOnline(login: string, password: string, authObserver: Observer<any>): void {
+  private aunthenticateUserOnline(credentials: Credentials, authObserver: Observer<any>): void {
     const headers = new HttpHeaders({'Content-type': 'application/json'});
-    this.httpClient.get(`${this.apiUrl}/users?login=${login}&&password=${password}`)
+    this.httpClient.get(`${this.apiUrl}/users?login=${credentials.login}&&password=${credentials.password}`)
       .subscribe(
         (authResults: Response) => {
           this.onAunthenticateUserOnlineSuccess(authResults, authObserver);
@@ -61,8 +62,8 @@ export class AuthService {
       authObserver.next({ authStatus: false, onlineMode: onlineMode });
   }
 
-  public signIn(login, password): void {
-    this.authenticateUser(login, password)
+  public signIn(credentials: Credentials): void {
+    this.authenticateUser(credentials)
       .subscribe(
         this.onSignInSuccess.bind(this),
         this.onSignInFailure.bind(this)
@@ -96,16 +97,16 @@ export class AuthService {
   private updateUserData(): void {
     let onlineMode = navigator.onLine;
     if (onlineMode) {
-      this.signIn(this.currentUser.login, this.currentUser.password);
+      this.signIn({login: this.currentUser.login, password: this.currentUser.password});
     } else {
       let activeCategory = JSON.parse(localStorage.getItem("productList")).category;
       this.router.navigate([`dashboard/products/${activeCategory}`]);
     }
   }
 
-  public signUp(users): Observable<Response> {
+  public signUp(user: User): Observable<Response> {
     return Observable.create( (observer: Observer<any>) => {
-      this.httpClient.post(`${this.apiUrl}/users`, users)
+      this.httpClient.post(`${this.apiUrl}/users`, user.getUserData())
         .subscribe(
           (authenticationStatus: Response) => {
             observer.next(authenticationStatus);
@@ -164,11 +165,8 @@ export class AuthService {
     )
   }
 
-  public updateUserInfo(userData): Observable<any> {   
-    const user = new User(userData.firstName, userData.lastName,
-      this.currentUser.login, userData.passwords.password,
-      userData.phone, this.currentUser.email, userData.address);
-
+  public updateUserInfo(info: UserData): Observable<any> {   
+    const user = new User(info);
     return this.httpClient.put(`${this.apiUrl}/users/${this.currentUser.id}`,  user);
   }
 

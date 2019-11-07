@@ -1,3 +1,4 @@
+import { Credentials } from './../auth.interfaces';
 import { AuthFacade } from './../store/auth.facade';
 import { LoadingService } from './../../shared/services/loading.service';
 import { Component, OnInit, OnDestroy } from "@angular/core";
@@ -30,8 +31,8 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   public onLogin(form: NgForm): void {
-    const { login, password } = form.value;
-    this.authFacade.trySignIn({login: login, password});
+    const credentials: Credentials = form.value;
+    this.authFacade.trySignIn(credentials);
     this.checkAuthenticationStatus();
   }
 
