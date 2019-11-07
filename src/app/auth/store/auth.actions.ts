@@ -6,6 +6,7 @@ export interface Credentials {
   password: string;
 }
 
+// (Optional) I think more correct - SIGN_IN
 export const SIGNIN = "[AUTH] SIGNIN";
 export const TRY_SIGNIN = "[AUTH] TRY_SIGNIN";
 export const SIGNUP = "[AUTH] SIGNUP";
@@ -29,6 +30,7 @@ export class LogOut implements Action {
 export class TrySignIn implements Action {
   readonly type = TRY_SIGNIN;
 
+  // can be - payload: Credentials
   constructor(public payload: { login: string; password: string }) {}
 }
 
@@ -41,6 +43,7 @@ export class TrySignUp implements Action {
 export class SetUserData implements Action {
   readonly type = SET_USER_DATA;
 
+  // you have forgotten to add type for payload
   constructor(public payload) {}
 }
 

@@ -5,11 +5,13 @@ import * as fromApp from './../../store/app.reducers';
 import * as authListActions from './../store/auth.actions';
 import { Store } from '@ngrx/store';
 
+// why do you have it in actions file also, better to add Credentials to auth.interfaces.ts and use it everywhere you need it
 export interface Credentials {
     login: string;
     password: string;
 }
 
+// using Facades, like +1
 @Injectable({
     providedIn: 'root'
 })
@@ -21,7 +23,7 @@ export class AuthFacade {
     }
 
     public trySignUp(payload: User): void {
-        this.store.dispatch(new authListActions.TrySignUp(payload));        
+        this.store.dispatch(new authListActions.TrySignUp(payload));
     }
 
     public logOut(): void {
@@ -29,4 +31,3 @@ export class AuthFacade {
         this.store.dispatch(new authListActions.CleanUserData());
     }
 }
- 

@@ -24,8 +24,9 @@ import { EffectsModule } from '@ngrx/effects';
         StoreModule.forRoot({auth: authReducers}),
         EffectsModule.forRoot([AuthEffects])
     ],
+  // again if it is empty why should keep it?
     exports: [
-           
+
     ]
 })
 
