@@ -1,5 +1,4 @@
 export interface UserData {
-    userId?: number;
     firstName: string;
     lastName: string;
     login: string;
@@ -7,6 +6,7 @@ export interface UserData {
     phone: string;
     email: string;
     address: string;
+    userId?: number;
 }
 
 export interface Credentials {

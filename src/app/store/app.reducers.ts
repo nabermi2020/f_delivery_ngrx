@@ -3,7 +3,7 @@ import * as fromDashboard from "./../dashboard/store/products.reducers";
 import { ActionReducerMap } from "@ngrx/store";
 
 export interface AppState {
-  authModule: fromAuth.State;
+  authModule: fromAuth.AuthState;
   dashboardModule: fromDashboard.State;
 }
 

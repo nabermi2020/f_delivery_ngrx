@@ -24,9 +24,7 @@ import { EffectsModule } from '@ngrx/effects';
         StoreModule.forRoot({auth: authReducers}),
         EffectsModule.forRoot([AuthEffects])
     ],
-    exports: [
-           
-    ]
+    exports: []
 })
 
 

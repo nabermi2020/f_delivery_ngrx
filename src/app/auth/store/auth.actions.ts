@@ -1,3 +1,4 @@
+import { UserData } from './../auth.interfaces';
 import { Action } from "@ngrx/store";
 import { User } from "../user.model";
 
@@ -6,11 +7,11 @@ export interface Credentials {
   password: string;
 }
 
-export const SIGNIN = "[AUTH] SIGNIN";
-export const TRY_SIGNIN = "[AUTH] TRY_SIGNIN";
-export const SIGNUP = "[AUTH] SIGNUP";
-export const LOGOUT = "[AUTH] LOGOUT";
-export const TRY_SIGNUP = "[AUTH] TRY_SIGNUP";
+export const SIGNIN = "[AUTH] SIGN_IN";
+export const TRY_SIGNIN = "[AUTH] TRY_SIGN_IN";
+export const SIGNUP = "[AUTH] SIGN_UP";
+export const LOGOUT = "[AUTH] LOG_OUT";
+export const TRY_SIGNUP = "[AUTH] TRY_SIGN_UP";
 export const SET_USER_DATA = "[AUTH] SET_USER_DATA";
 export const CLEAN_USER_DATA = "[AUTH] CLEAN_USER_DATA";
 
@@ -29,7 +30,7 @@ export class LogOut implements Action {
 export class TrySignIn implements Action {
   readonly type = TRY_SIGNIN;
 
-  constructor(public payload: { login: string; password: string }) {}
+  constructor(public payload: Credentials) {}
 }
 
 export class TrySignUp implements Action {
@@ -41,7 +42,7 @@ export class TrySignUp implements Action {
 export class SetUserData implements Action {
   readonly type = SET_USER_DATA;
 
-  constructor(public payload) {}
+  constructor(public payload: Array<UserData>) {}
 }
 
 export class CleanUserData implements Action {

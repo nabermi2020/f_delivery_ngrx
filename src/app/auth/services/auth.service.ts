@@ -1,4 +1,4 @@
-import { Credentials } from './../store/auth.facade';
+import { Credentials } from './../store/auth.actions';
 import { UserData } from './../auth.interfaces';
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';

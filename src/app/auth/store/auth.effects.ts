@@ -1,4 +1,4 @@
-import { Credentials } from './auth.facade';
+import { Credentials } from './auth.actions';
 import { AuthService } from "./../services/auth.service";
 import { Effect, Actions, ofType } from "@ngrx/effects";
 import { Injectable } from "@angular/core";

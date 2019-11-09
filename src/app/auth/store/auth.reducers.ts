@@ -1,10 +1,10 @@
 import * as AuthActions from "./auth.actions";
 
 export interface AppState {
-  authModule: State;
+  authModule: AuthState;
 }
 
-export interface State {
+export interface AuthState {
   authStatus: boolean;
   userData: Array<any>;
 }
