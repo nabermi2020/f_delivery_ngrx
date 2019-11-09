@@ -1,4 +1,5 @@
 import * as AuthActions from "./auth.actions";
+import { createReducer, on } from '@ngrx/store';
 
 export interface AppState {
   authModule: AuthState;
@@ -14,41 +15,30 @@ const initialState = {
   userData: []
 };
 
-export function authReducers(
-  state = initialState,
-  action: AuthActions.AuthActions
-) {
-  switch (action.type) {
-    case AuthActions.SIGNIN:
-      return {
-        ...state,
-        authStatus: true
-      };
+export const authReducers = createReducer(
+  initialState,
+  on(AuthActions.SignIn, state => ({
+    ...state,
+    authStatus: true
+  })),
 
-    case AuthActions.SET_USER_DATA:
-      return {
-        ...state,
-        userData: [...state.userData, ...action.payload]
-      };
+  on(AuthActions.SignUp, state => ({
+    ...state
+  })),
 
-    case AuthActions.CLEAN_USER_DATA:
-      return {
-        ...state,
-        userData: []
-      };
+  on(AuthActions.LogOut, state => ({
+    ...state,
+    authStatus: false
+  })),
 
-    case AuthActions.SIGNUP:
-      return {
-        ...state
-      };
+  on(AuthActions.SetUserData, (state, payload) => ({
+    ...state,
+    userData: [...initialState.userData, ...payload]
+  })),
+  
+  on(AuthActions.CleanUserData, state => ({
+    ...state,
+    userData: []
+  }))
+);
 
-    case AuthActions.LOGOUT:
-      return {
-        ...state,
-        authStatus: false
-      };
-
-    default:
-      return state;
-  }
-}

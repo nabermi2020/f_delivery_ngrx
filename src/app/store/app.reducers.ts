@@ -7,7 +7,7 @@ export interface AppState {
   dashboardModule: fromDashboard.State;
 }
 
-export const reducers: ActionReducerMap<AppState> = {
+export const reducers = {
   authModule: fromAuth.authReducers,
   dashboardModule: fromDashboard.productReducer
 };

@@ -54,6 +54,7 @@ export class AuthService {
       localStorage.setItem('userInfo', JSON.stringify(authResults[0]));
       let authStatus = this.getAuthStatus(authResults) == true ? true : false;
       authObserver.next({ authStatus: authStatus, onlineMode: onlineMode, userData: authResults[0] });
+      authObserver.complete();
   }
 
   private onAunthenticateUserOnlineFailure(error, authObserver: Observer<any>): void {
@@ -106,7 +107,7 @@ export class AuthService {
 
   public signUp(user: User): Observable<Response> {
     return Observable.create( (observer: Observer<any>) => {
-      this.httpClient.post(`${this.apiUrl}/users`, user.getUserData())
+      this.httpClient.post(`${this.apiUrl}/users`, user)
         .subscribe(
           (authenticationStatus: Response) => {
             observer.next(authenticationStatus);
