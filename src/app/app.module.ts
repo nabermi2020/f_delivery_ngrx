@@ -18,6 +18,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppComponent } from './app.component';
 import { reducers } from './store/app.reducers';
 import { environment } from 'src/environments/environment';
+import { NxModule } from '@nrwl/angular';
 
 @NgModule({
   declarations: [

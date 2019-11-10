@@ -39,15 +39,6 @@ export const CleanUserData = createAction(
 );
 
 
-
-
-
-
-
-
-
-
-
 // export const SIGNIN = "[AUTH] SIGN_IN";
 // export const TRY_SIGNIN = "[AUTH] TRY_SIGN_IN";
 // export const SIGNUP = "[AUTH] SIGN_UP";

@@ -1,3 +1,5 @@
+import { User } from './user.model';
+
 export interface UserData {
     firstName: string;
     lastName: string;
@@ -12,4 +14,10 @@ export interface UserData {
 export interface Credentials {
     login: string;
     password: string;
+}
+
+export interface AuthStatus {
+    authStatus: boolean;
+    onlineMode: boolean;
+    userData: Array<User>;
 }
