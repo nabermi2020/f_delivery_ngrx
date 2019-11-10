@@ -1,14 +1,15 @@
-import { AuthState } from './auth.reducers';
-import { createSelector, select } from '@ngrx/store';
-import { Store } from '@ngrx/store';
-import * as fromApp from './../../store/app.reducers';
-import { Injectable } from '@angular/core';
+import { AuthState } from "./auth.reducers";
+import { createSelector } from "@ngrx/store";
+import { AppState } from "./../../store/app.reducers";
 
-@Injectable()
-export class AuthSelectors {
-    constructor(private store: Store<fromApp.AppState>) {}
+export const authModule = (state: AppState) => state.authModule;
 
-    getAuthStatus = (state) => createSelector(state, (state: AuthState) => state.authStatus);
+export const getAuthStatus = createSelector(
+  authModule,
+  (state: AuthState) => state.authStatus
+);
 
-    authModule$ = this.store.pipe(select(this.getAuthStatus));
-}
+export const getUserData = createSelector(
+  authModule,
+  (state: AuthState) => state.userData[0]
+);

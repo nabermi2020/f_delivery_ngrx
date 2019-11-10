@@ -1,10 +1,6 @@
 import { AuthFacade } from './store/auth.facade';
-import { AuthSelectors } from './store/auth.selectors';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import * as fromApp from './../store/app.reducers';
-
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -19,9 +15,9 @@ export class AuthGuard implements CanActivate {
     private checkAuthenticationStatus(): void {
         this.authFacade.authModule$
         .subscribe(
-            (authData) => {
-                console.log(authData);
-                 this.isAuthorized = authData.authStatus;
+            (authStatus) => {
+                console.log(authStatus);
+                 this.isAuthorized = authStatus;
             }
         );
             

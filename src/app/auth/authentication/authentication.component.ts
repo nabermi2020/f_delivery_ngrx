@@ -1,5 +1,4 @@
 import { Credentials } from './../auth.interfaces';
-import { AuthSelectors } from './../store/auth.selectors';
 import { AuthFacade } from './../store/auth.facade';
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
@@ -19,9 +18,10 @@ export class AuthenticationComponent implements OnInit {
 
   private checkAuthenticationStatus(): void {
     
-    this.authFacade.authModule$.
-      subscribe(authData => {
-        if (authData.authStatus && navigator.onLine) {
+    this.authFacade.authModuleStatus$.
+      subscribe(authStatus => {
+        console.log(authStatus);
+        if (authStatus && navigator.onLine) {
           this.router.navigate(["/dashboard/products/pizza"]);
         } else {
           this.router.navigate([""]);

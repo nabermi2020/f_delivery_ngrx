@@ -1,5 +1,4 @@
 import { ProductsSelectors } from './dashboard/store/products.selectors';
-import { AuthSelectors } from './auth/store/auth.selectors';
 import { AuthHttpClientService } from './auth/services/auth-http-client.service';
 import { StoreModule } from '@ngrx/store';
 import { ProductCart } from './shared/services/product-cart.service';
@@ -41,8 +40,8 @@ import { NxModule } from '@nrwl/angular';
     LoadingService,
     ErrorService,
     AuthHttpClientService,
-    AuthSelectors,
-    ProductsSelectors
+    ProductsSelectors,
+    
   ],
   bootstrap: [AppComponent]
 })

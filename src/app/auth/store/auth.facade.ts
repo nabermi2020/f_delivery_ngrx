@@ -1,21 +1,17 @@
-import { Credentials, UserData } from './../auth.interfaces';
+import { Credentials } from './../auth.interfaces';
 import { User } from './../user.model';
 import { Injectable } from '@angular/core';
-import { TrySignIn } from "./auth.actions";
 import * as fromApp from './../../store/app.reducers';
 import * as authListActions from './../store/auth.actions';
-import { Store } from '@ngrx/store';
-
-export interface Credentials {
-    login: string;
-    password: string;
-}
+import { Store, select } from '@ngrx/store';
+import * as authSelectors from './../store/auth.selectors';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthFacade {
-    public authModule$ = this.store.select("authModule");
+    
+    public authModuleStatus$ = this.store.pipe(select(authSelectors.getAuthStatus));
 
     constructor(private store: Store<fromApp.AppState>) {}
 
