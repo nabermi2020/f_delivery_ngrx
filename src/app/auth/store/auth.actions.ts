@@ -12,7 +12,7 @@ export const SignIn = createAction(
 );
 
 export const SignUp = createAction(
-  '[AUTH] SIGN_UP'  
+  '[AUTH] SIGN_UP'
 );
 
 export const TrySignIn = createAction(
@@ -21,7 +21,7 @@ export const TrySignIn = createAction(
 );
 
 export const LogOut = createAction(
-  '[AUTH] LOG_OUT' 
+  '[AUTH] LOG_OUT'
 );
 
 export const TrySignUp = createAction(
@@ -35,7 +35,7 @@ export const SetUserData = createAction(
 );
 
 export const CleanUserData = createAction(
-  '[AUTH] CLEAN_USER_DATA' 
+  '[AUTH] CLEAN_USER_DATA'
 );
 
 

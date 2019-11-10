@@ -35,7 +35,7 @@ export const authReducers = createReducer(
     ...state,
     userData: [...initialState.userData, ...payload]
   })),
-  
+
   on(AuthActions.CleanUserData, state => ({
     ...state,
     userData: []

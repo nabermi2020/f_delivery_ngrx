@@ -11,10 +11,10 @@ import { UserData } from '../auth.interfaces';
 
 @Injectable()
 export class AuthEffects {
-  constructor(private actions$: Actions, 
+  constructor(private actions$: Actions,
               private authService: AuthService) { }
 
-  authSignIn$ = createEffect( () => 
+  authSignIn$ = createEffect( () =>
     this.actions$.pipe(
       ofType('[AUTH] TRY_SIGN_IN'),
       map((action: Credentials)=> {
@@ -22,7 +22,7 @@ export class AuthEffects {
           login: action.login,
           password: action.password
         }
-      }),     
+      }),
       switchMap((authData: Credentials) => {
         return this.authService.authenticateUser(authData);
       }),
@@ -49,7 +49,7 @@ export class AuthEffects {
         }
       )
     ) );
-  
+
 
   authSignUp$ = createEffect( () =>
     this.actions$.pipe(
@@ -59,7 +59,7 @@ export class AuthEffects {
         return action["data"];
       }),
       switchMap((userData: User) => {
-        
+
         return this.authService.signUp(userData);
       }),
       mergeMap((registrationStatus: Response) => {
@@ -68,7 +68,7 @@ export class AuthEffects {
             type: '[AUTH] SIGN_UP'
           }
         ];
-      })  
+      })
     )
   );
 

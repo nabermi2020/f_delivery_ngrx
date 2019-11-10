@@ -9,6 +9,6 @@ export class AuthSelectors {
     constructor(private store: Store<fromApp.AppState>) {}
 
     getAuthStatus = (state) => createSelector(state, (state: AuthState) => state.authStatus);
-    
+
     authModule$ = this.store.pipe(select(this.getAuthStatus));
 }

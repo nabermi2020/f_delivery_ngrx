@@ -6,12 +6,17 @@ import * as fromApp from './../../store/app.reducers';
 import * as authListActions from './../store/auth.actions';
 import { Store } from '@ngrx/store';
 
+export interface Credentials {
+    login: string;
+    password: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
 export class AuthFacade {
     public authModule$ = this.store.select("authModule");
-    
+
     constructor(private store: Store<fromApp.AppState>) {}
 
     public trySignIn(payload: Credentials): void {
@@ -19,7 +24,7 @@ export class AuthFacade {
     }
 
     public trySignUp(payload: User): void {
-        this.store.dispatch(authListActions.TrySignUp(payload));        
+        this.store.dispatch(authListActions.TrySignUp(payload));
     }
 
     public logOut(): void {
@@ -27,4 +32,3 @@ export class AuthFacade {
         this.store.dispatch(authListActions.CleanUserData());
     }
 }
- 
