@@ -1,4 +1,4 @@
-import * as fromAuthSelectors from "./../store/auth.selectors";
+import * as fromAuthSelectors from "../auth.selectors";
 
 describe("Auth Module selectors", () => {
   const mockState = {

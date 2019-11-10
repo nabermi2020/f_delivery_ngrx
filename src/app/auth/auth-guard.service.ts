@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     }
 
     private checkAuthenticationStatus(): void {
-        this.authFacade.authModule$
+        this.authFacade.authModuleStatus$
         .subscribe(
             (authStatus) => {
                 console.log(authStatus);
