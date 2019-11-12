@@ -1,4 +1,5 @@
 import { UserData } from "./../../auth.interfaces";
+import * as fromAuth from './../auth.reducers';
 import {
   SignUp,
   TrySignIn,
@@ -12,7 +13,7 @@ import { SignIn } from "../auth.actions";
 import { User } from "../../user.model";
 
 describe("Auth Actions", () => {
-  const mockUserData: UserData = {
+  const mockUserData = {
     firstName: "Michael",
     lastName: "Oherni",
     login: "John9992222",
@@ -71,9 +72,12 @@ describe("Auth Actions", () => {
     const user = mockUserData;
     let users: Array<UserData> = [];
     users.push(user);
+    
     const action = SetUserData(users);
+    console.log({...action});
+    console.log({type: "[AUTH] SET_USER_DATA", ...users});
 
-    expect({ ...action }).toEqual({
+    expect(action).toEqual({
       type: "[AUTH] SET_USER_DATA",
       ...users
     });

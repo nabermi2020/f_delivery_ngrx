@@ -9,6 +9,7 @@ export interface UserData {
     email: string;
     address: string;
     userId?: number;
+    type?: string;
 }
 
 export interface Credentials {

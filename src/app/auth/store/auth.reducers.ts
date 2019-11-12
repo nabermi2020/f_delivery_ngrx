@@ -10,7 +10,7 @@ export interface AuthState {
   userData: Array<any>;
 }
 
-const initialState = {
+export const initialState = {
   authStatus: false,
   userData: []
 };
@@ -33,7 +33,7 @@ export const authReducers = createReducer(
 
   on(AuthActions.SetUserData, (state, payload) => ({
     ...state,
-    userData: [...initialState.userData, ...payload]
+    userData: [...state.userData, ...payload]
   })),
 
   on(AuthActions.CleanUserData, state => ({
