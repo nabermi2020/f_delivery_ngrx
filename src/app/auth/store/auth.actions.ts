@@ -31,7 +31,7 @@ export const TrySignUp = createAction(
 
 export const SetUserData = createAction(
   '[AUTH] SET_USER_DATA',
-  props<Array<UserData>>()
+  props<Array<User>>()
 );
 
 export const CleanUserData = createAction(

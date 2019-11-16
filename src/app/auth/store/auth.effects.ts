@@ -5,13 +5,12 @@ import { Actions, ofType, createEffect } from "@ngrx/effects";
 import { Injectable } from "@angular/core";
 import { map, mergeMap, switchMap, catchError } from "rxjs/operators";
 import { User } from "../user.model";
-import { throwError } from "rxjs";
-
+import { throwError, of } from "rxjs";
+import * as fromAuthActions from "./../store/auth.actions";
 
 @Injectable()
 export class AuthEffects {
-  constructor(private actions$: Actions,
-              private authService: AuthService) {}
+  constructor(private actions$: Actions, private authService: AuthService) {}
 
   authSignIn$ = createEffect(() =>
     this.actions$.pipe(
@@ -30,19 +29,14 @@ export class AuthEffects {
         );
       }),
       mergeMap((authResponse: AuthStatus) => {
-        console.log(authResponse.userData);
+        console.log(authResponse);
         if (!authResponse.authStatus) {
           return [];
         } else {
-          return [
-            {
-              type: "[AUTH] SIGN_IN"
-            },
-            {
-              type: "[AUTH] SET_USER_DATA",
-              payload: authResponse.userData
-            }
-          ];
+          return of(
+            fromAuthActions.SignIn(),
+            fromAuthActions.SetUserData(authResponse.userData)
+          );
         }
       })
     )
@@ -56,31 +50,15 @@ export class AuthEffects {
         return action["data"];
       }),
       switchMap((userData: User) => {
-        return this.authService.signUp(userData);
+        return this.authService.signUp(userData).pipe(
+          catchError(err => {
+            return throwError(err);
+          })
+        );
       }),
-      mergeMap((registrationStatus: Response) => {
-        return [
-          {
-            type: "[AUTH] SIGN_UP"
-          }
-        ];
+      mergeMap(() => {
+        return of(fromAuthActions.SignUp());
       })
     )
   );
 }
-
-// @Effect()
-// authSignUp = this.actions$.pipe(
-//   ofType(AuthActions.TRY_SIGNUP),
-//   map((action: AuthActions.TrySignUp) => action.payload),
-//   switchMap((userData: User) => {
-//     return this.authService.signUp(userData);
-//   }),
-//   mergeMap((registrationStatus: Response) => {
-//     return [
-//       {
-//         type: AuthActions.SIGNUP
-//       }
-//     ];
-//   })
-// );
