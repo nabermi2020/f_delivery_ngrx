@@ -28,6 +28,7 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.authStatus.unsubscribe();
+    
   }
 
   public onLogin(form: NgForm): void {
