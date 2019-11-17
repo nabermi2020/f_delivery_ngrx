@@ -29,15 +29,11 @@ export class AuthEffects {
         );
       }),
       mergeMap((authResponse: AuthStatus) => {
-        console.log(authResponse);
-        if (!authResponse.authStatus) {
-          return [];
-        } else {
           return of(
             fromAuthActions.SignIn(),
             fromAuthActions.SetUserData(authResponse.userData)
           );
-        }
+        
       })
     )
   );

@@ -1,3 +1,4 @@
+import { User } from './../../user.model';
 import { Action } from '@ngrx/store';
 import * as fromAuth from './../auth.reducers';
 import * as fromAuthActions from './../auth.actions';
@@ -16,7 +17,7 @@ describe('Auth Reducers', () => {
     };
     
     it('undefined Action', () => {
-        const { initialState } = fromAuth;
+        const initialState  = fromAuth.initialState;
         const action: Action = { type : '' };
         const state = fromAuth.authReducers(undefined, action);
 
@@ -51,8 +52,8 @@ describe('Auth Reducers', () => {
     });
 
     it('Set User Data Action', () => {
-        const user = mockUserData;
-        let users: Array<UserData> = [];
+        const user = new User(mockUserData);
+        let users: Array<User> = [];
         users.push(user);
         const { initialState } = fromAuth;
         initialState.authStatus = true;

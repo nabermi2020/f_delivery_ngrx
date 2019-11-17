@@ -69,17 +69,17 @@ describe("Auth Actions", () => {
   });
 
   it("Set User Data", () => {
-    const user = mockUserData;
-    let users: Array<UserData> = [];
+    const user = new User(mockUserData);
+    let users: Array<User> = [];
     users.push(user);
     
     const action = SetUserData(users);
     console.log({...action});
-    console.log({type: "[AUTH] SET_USER_DATA", ...users});
+    console.log({type: "[AUTH] SET_USER_DATA", payload: users});
 
-  //   expect(action).toEqual({
-  //     type: "[AUTH] SET_USER_DATA",
-  //     ...users
-  //   });
+    // expect(action).toEqual({
+    //   type: "[AUTH] SET_USER_DATA",
+    //   ...users
+    // });
   });
 });
