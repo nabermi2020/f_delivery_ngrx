@@ -6,6 +6,7 @@ import { AuthEffects } from "./../auth.effects";
 import { ReplaySubject, Observable, pipe, of } from "rxjs";
 import { TestBed } from "@angular/core/testing";
 import { User } from "../../user.model";
+import * as fromAuthActions from './../auth.actions';
 
 describe("Auth Effects", () => {
   
@@ -58,21 +59,8 @@ describe("Auth Effects", () => {
     let credentials: Credentials = {
       login: "John",
       password: "test123"
-    };
-    let mockUser = {
-      firstName: "johnny",
-      lastName: "sidness",
-      login: "John999",
-      password: "test123",
-      phone: "0501865210",
-      email: "nab@op.op",
-      address: "LA, New Walley 145/85",
-      userId: 988
-    };
-    let user = new User(mockUser);
-    let users: Array<User> = [];
-    users.push(user);
-
+    };    
+    let userData: Array<User> = [];
     const trySignInAction = {
       type: "[AUTH] TRY_SIGN_IN",
       payload: credentials
@@ -92,14 +80,13 @@ describe("Auth Effects", () => {
     const effects = new AuthEffects(actions$, authService);
 
     effects.authSignIn$.subscribe(action => {
-      expect(action).toEqual({
-        type: "[AUTH] SIGN_IN"
-      });
+      expect(action).toEqual(
+        fromAuthActions.SignIn()
+      );
 
-      expect(action).toEqual({
-        type: "[AUTH] SET_USER_DATA",
-        payload: users
-      });
+      expect(action).toEqual(
+        fromAuthActions.SetUserData(userData) 
+      );
     });
   });
 });
