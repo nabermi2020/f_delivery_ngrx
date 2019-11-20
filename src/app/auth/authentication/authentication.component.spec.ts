@@ -11,7 +11,7 @@ import { AuthFacade } from "./../store/auth.facade";
 import { Location } from "@angular/common";
 import { RouterTestingModule } from "@angular/router/testing";
 import { provideMockStore, MockStore } from "@ngrx/store/testing";
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { Router, Routes } from "@angular/router";
 import { AuthenticationComponent } from "./authentication.component";
 import { Store } from "@ngrx/store";
@@ -28,6 +28,7 @@ const routes: Routes = [
   { path: "", component: SignInComponent }
 ];
 
+// it is better to move to shared file becuase you are using it not only for this spec
 class TestStore<T> {
   private state: BehaviorSubject<T> = new BehaviorSubject(undefined);
 
@@ -53,6 +54,8 @@ describe("AuthenticationComponent", () => {
   const initialState = { authStatus: false, userData: [] };
   let location: Location;
   let router: Router;
+  // let component: AuthenticationComponent;
+  // let fixture: ComponentFixture<AuthenticationComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -77,16 +80,23 @@ describe("AuthenticationComponent", () => {
     location = TestBed.get(Location);
     store = TestBed.get(Store);
     router.initialNavigation();
+    // fixture = TestBed.createComponent(AuthenticationComponent);
+    // component = fixture.componentInstance;
+    // fixture.detectChanges();
   });
 
   it("should call ngOnInit", () => {
+    // fixture better declare in beforeEach section like
     const fixture = TestBed.createComponent(AuthenticationComponent);
+    // better to call it - component and declare in beforeEach section
     let authComponent = fixture.debugElement.componentInstance;
     spyOn(authComponent, "ngOnInit").and.callThrough();
     spyOn(authComponent, "checkAuthenticationStatus").and.callThrough();
+    // there is no expect in this it!!!
   });
 
   it("should call checkAuthenticationStatus", () => {
+    // if you never reassign variable better to use - const instead let
     let store = new TestStore<fromAuth.AuthState>();
     store.setState({
       authStatus: true,
@@ -108,6 +118,7 @@ describe("AuthenticationComponent", () => {
   });
 
   it("should call isAuthenticated", () => {
+    // also do not forget to run tests with coverage mode to see what cases you have not covered
     let onlineMode = true;
     let credentials: Credentials = {
       login: "John",

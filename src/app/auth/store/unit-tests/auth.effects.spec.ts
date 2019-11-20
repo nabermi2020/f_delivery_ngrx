@@ -9,7 +9,7 @@ import { User } from "../../user.model";
 import * as fromAuthActions from './../auth.actions';
 
 describe("Auth Effects", () => {
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
@@ -55,11 +55,12 @@ describe("Auth Effects", () => {
   });
 
   it("TrySignIn effect", () => {
+    // I can see 4 expects it is not so good, I think it is candidate to refactor you effect
     let actions$ = new ReplaySubject<any>(1);
     let credentials: Credentials = {
       login: "John",
       password: "test123"
-    };    
+    };
     let userData: Array<User> = [];
     const trySignInAction = {
       type: "[AUTH] TRY_SIGN_IN",
@@ -85,7 +86,7 @@ describe("Auth Effects", () => {
       );
 
       expect(action).toEqual(
-        fromAuthActions.SetUserData(userData) 
+        fromAuthActions.SetUserData(userData)
       );
     });
   });

@@ -15,7 +15,7 @@ describe('Auth Reducers', () => {
         password: "test123",
         userId: 33
     };
-    
+
     it('undefined Action', () => {
         const initialState  = fromAuth.initialState;
         const action: Action = { type : '' };
@@ -25,6 +25,7 @@ describe('Auth Reducers', () => {
     });
 
     it('Sign In Action', () => {
+        // candidate for beforeEach section
         const { initialState } = fromAuth;
         const action: Action = fromAuthActions.SignIn();
         const state = fromAuth.authReducers(initialState, action);
@@ -59,7 +60,7 @@ describe('Auth Reducers', () => {
         initialState.authStatus = true;
         const action: Action = fromAuthActions.SetUserData(users);
         const state = fromAuth.authReducers(initialState, action);
-        
+
         expect(state.authStatus).toEqual(true);
         expect(state.userData[0][0]).toEqual(users[0]);
     });
@@ -68,7 +69,7 @@ describe('Auth Reducers', () => {
         const { initialState } = fromAuth;
         const action: Action = fromAuthActions.CleanUserData();
         const state = fromAuth.authReducers(initialState, action);
-        
+
         expect(state.userData).toEqual([]);
     });
 });

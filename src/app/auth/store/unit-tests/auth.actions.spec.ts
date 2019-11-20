@@ -13,6 +13,7 @@ import { SignIn } from "../auth.actions";
 import { User } from "../../user.model";
 
 describe("Auth Actions", () => {
+  // if you have entities which can be shared better to add them to json file and require in places where you need it
   const mockUserData = {
     firstName: "Michael",
     lastName: "Oherni",
@@ -24,6 +25,7 @@ describe("Auth Actions", () => {
     userId: 33
   };
 
+  // from my point of view actions we can leave without tests but if you have it - good
   it("Sign In", () => {
     const action = SignIn();
     expect({ ...action }).toEqual({ type: "[AUTH] SIGN_IN" });
@@ -72,11 +74,13 @@ describe("Auth Actions", () => {
     const user = new User(mockUserData);
     let users: Array<User> = [];
     users.push(user);
-    
+
     const action = SetUserData(users);
+    // master it is latest source of truth, so it is always should be clean, so no console logs or etc, you can easily use them locally or inside you dev branches but never in the master, please try to get used to it
     console.log({...action});
     console.log({type: "[AUTH] SET_USER_DATA", payload: users});
 
+    // also related to hidden code, if it is hidden then you do not need it, so why to keep it?
     // expect(action).toEqual({
     //   type: "[AUTH] SET_USER_DATA",
     //   ...users

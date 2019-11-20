@@ -54,6 +54,7 @@ describe("Auth Guard", () => {
     router.initialNavigation();
   }));
 
+  // subject does not really good and semantic
   it("checkAuthenticationStatus && canActivate", () => {
     let store = new TestStore<fromAuth.AuthState>();
     store.setState({
@@ -65,10 +66,12 @@ describe("Auth Guard", () => {
 
     let mockFacade = new MockAuthFacade(store);
     let userInfo: boolean = true;
+    // do not forget to unsubscribe in afterAll or afterEach section
     mockFacade.authModuleStatus$.subscribe(authRes => {
       isAuthorized = authRes.authStatus;
     });
     expect(isAuthorized).toEqual(true);
+    // it is not good practice to add logic like if or for loops or etc to tests
     if (isAuthorized && userInfo) {
       authorizedStatus = true;
     } else {
